@@ -1,6 +1,7 @@
 import React from 'react';
-import { CpuIcon, Layers, TrendingUp, Database } from 'lucide-react';
+import { CpuIcon, Layers, TrendingUp, Database, Printer, ArrowLeft } from 'lucide-react';
 import { SiPython, SiScikitlearn, SiFastapi, SiDvc, SiLangchain } from 'react-icons/si';
+import Button from '@components/Button';
 import ProjectCard from './ProjectCard';
 import { projectsData } from '@utils/constants';
 
@@ -16,6 +17,26 @@ const AIPortfolio: React.FC<AIPortfolioProps> = ({ onNavigate }) => {
 
   return (
     <div className="space-y-12 animate-in fade-in duration-500">
+      {/* 뒤로가기 & 출력 버튼 */}
+      <div className="flex justify-between items-center print:hidden">
+        <Button 
+          variant="ghost" 
+          onClick={() => onNavigate('/portfolio')}
+          className="gap-2"
+        >
+          <ArrowLeft size={16} />
+          포트폴리오 목록
+        </Button>
+        <Button 
+          variant="outline" 
+          onClick={() => window.print()}
+          className="gap-2"
+        >
+          <Printer size={16} />
+          출력하기
+        </Button>
+      </div>
+
       {/* Hero Section */}
       <section className="text-center py-12 space-y-6">
         <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-purple-100 shadow-lg">

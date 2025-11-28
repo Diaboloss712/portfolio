@@ -100,47 +100,73 @@ const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ project, onNaviga
         </Button>
       </div>
 
-      {/* Title Section - Projects 페이지 스타일 */}
+      {/* Title Section */}
       <Card className="print:shadow-none">
         <CardHeader>
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-3">
-                <Badge variant="secondary">{project.category}</Badge>
-                <span className={`flex h-2 w-2 rounded-full ${getStatusColor(project.status)}`} />
-                <span className="text-xs font-medium text-slate-500">{project.status}</span>
-              </div>
-              <h1 className="text-3xl font-bold text-slate-900 mb-2">
-                {project.title}
-              </h1>
-              <p className="text-slate-600 leading-relaxed">
-                {project.desc}
-              </p>
-            </div>
-            <div className="flex items-center gap-2 text-xs text-slate-500 font-mono flex-shrink-0">
-              <Calendar size={14} />
-              <span>{project.date}</span>
-            </div>
-          </div>
+          <h1 className="text-3xl font-bold text-slate-900 mb-4">
+            {project.title}
+          </h1>
+          <p className="text-slate-600 leading-relaxed mb-6">
+            {project.desc}
+          </p>
           
-          <div className="flex items-center gap-4 text-sm">
-            {project.teamSize && (
-              <div className="flex items-center gap-2 text-slate-600">
-                <Users size={16} />
-                <span>{project.teamSize}</span>
-              </div>
-            )}
-            {project.link && (
-              <a 
-                href={project.link} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-blue-600 hover:text-blue-700 print:hidden"
-              >
-                <ExternalLink size={16} />
-                View Repository
-              </a>
-            )}
+          {/* 프로젝트 정보 표 */}
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <tbody>
+                <tr className="border-b border-slate-200">
+                  <td className="py-3 px-4 bg-slate-50 font-semibold text-slate-700 w-32">카테고리</td>
+                  <td className="py-3 px-4">
+                    <Badge variant="secondary">{project.category}</Badge>
+                  </td>
+                </tr>
+                <tr className="border-b border-slate-200">
+                  <td className="py-3 px-4 bg-slate-50 font-semibold text-slate-700">상태</td>
+                  <td className="py-3 px-4">
+                    <div className="flex items-center gap-2">
+                      <span className={`flex h-2 w-2 rounded-full ${getStatusColor(project.status)}`} />
+                      <span className="text-sm font-medium text-slate-700">{project.status}</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr className="border-b border-slate-200">
+                  <td className="py-3 px-4 bg-slate-50 font-semibold text-slate-700">기간</td>
+                  <td className="py-3 px-4">
+                    <div className="flex items-center gap-2">
+                      <Calendar size={14} className="text-slate-500" />
+                      <span className="text-sm text-slate-700">{project.date}</span>
+                    </div>
+                  </td>
+                </tr>
+                {project.teamSize && (
+                  <tr className="border-b border-slate-200">
+                    <td className="py-3 px-4 bg-slate-50 font-semibold text-slate-700">팀 구성</td>
+                    <td className="py-3 px-4">
+                      <div className="flex items-center gap-2">
+                        <Users size={14} className="text-slate-500" />
+                        <span className="text-sm text-slate-700">{project.teamSize}</span>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+                {project.link && (
+                  <tr className="border-b border-slate-200">
+                    <td className="py-3 px-4 bg-slate-50 font-semibold text-slate-700">Repository</td>
+                    <td className="py-3 px-4">
+                      <a 
+                        href={project.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-700 print:text-blue-600"
+                      >
+                        <ExternalLink size={14} />
+                        <span className="text-sm">View Repository</span>
+                      </a>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         </CardHeader>
       </Card>
@@ -288,42 +314,47 @@ const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ project, onNaviga
           <CardHeader>
             <CardTitle>이슈 또는 문제 해결</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-8">
-              {project.issues.map((issue, idx) => (
-                <div key={idx} className="space-y-3 pb-6 border-b border-slate-200 last:border-0">
-                  <h4 className="font-bold text-lg text-slate-900">
-                    {idx + 1}. {issue.title}
-                  </h4>
-                  
-                  {issue.cause && (
-                    <div className="pl-4">
-                      <h5 className="font-semibold text-slate-800 mb-1">발생 상황</h5>
-                      <p className="text-slate-700 leading-relaxed pl-3">{issue.cause}</p>
-                    </div>
-                  )}
-                  
-                  <div className="pl-4">
-                    <h5 className="font-semibold text-slate-800 mb-1">대응책</h5>
-                    <p className="text-slate-700 leading-relaxed pl-3">{issue.solution}</p>
-                  </div>
-                  
-                  {issue.result && (
-                    <div className="pl-4">
-                      <h5 className="font-semibold text-slate-800 mb-1">결과</h5>
-                      <p className="text-slate-700 leading-relaxed pl-3">{issue.result}</p>
-                    </div>
-                  )}
-                  
-                  {issue.comparison && (
-                    <div className="pl-4">
-                      <h5 className="font-semibold text-slate-800 mb-1">비교 분석</h5>
-                      <p className="text-slate-700 leading-relaxed pl-3 bg-blue-50 p-3 rounded border-l-4 border-blue-500">{issue.comparison}</p>
-                    </div>
-                  )}
+          <CardContent className="space-y-6">
+            {project.issues.map((issue, idx) => (
+              <div key={idx} className="space-y-3">
+                <h4 className="font-bold text-lg text-slate-900 mb-3">
+                  {idx + 1}. {issue.title}
+                </h4>
+                
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <tbody>
+                      {issue.cause && (
+                        <tr className="border-b border-slate-200">
+                          <td className="py-3 px-4 bg-slate-50 font-semibold text-slate-700 w-32 align-top">발생 상황</td>
+                          <td className="py-3 px-4 text-slate-700 leading-relaxed">{issue.cause}</td>
+                        </tr>
+                      )}
+                      <tr className="border-b border-slate-200">
+                        <td className="py-3 px-4 bg-slate-50 font-semibold text-slate-700 w-32 align-top">대응책</td>
+                        <td className="py-3 px-4 text-slate-700 leading-relaxed">{issue.solution}</td>
+                      </tr>
+                      {issue.result && (
+                        <tr className="border-b border-slate-200">
+                          <td className="py-3 px-4 bg-slate-50 font-semibold text-slate-700 w-32 align-top">결과</td>
+                          <td className="py-3 px-4 text-slate-700 leading-relaxed">{issue.result}</td>
+                        </tr>
+                      )}
+                      {issue.comparison && (
+                        <tr className="border-b border-slate-200">
+                          <td className="py-3 px-4 bg-slate-50 font-semibold text-slate-700 w-32 align-top">비교 분석</td>
+                          <td className="py-3 px-4">
+                            <div className="bg-blue-50 p-3 rounded border-l-4 border-blue-500 text-slate-700 leading-relaxed">
+                              {issue.comparison}
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
             {project.images?.issues && project.images.issues.length > 0 && (
               <div className="grid md:grid-cols-2 gap-4 mt-4">
                 {project.images.issues.map((img, idx) => (

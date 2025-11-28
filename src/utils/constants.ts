@@ -25,6 +25,7 @@ export interface Project {
   image?: string;
   details?: string[];
   // 상세 페이지용 추가 필드
+  projectType?: 'personal' | 'team';
   teamSize?: string;
   myRole?: string;
   overview?: string;
@@ -56,7 +57,7 @@ export interface Categories {
 }
 
 export const personalInfo: PersonalInfo = {
-  name: "Diaboloss",
+  name: "여병규",
   role: "Backend & AI Engineer",
   email: "diaboloss217@gmail.com",
   github: "https://github.com/Diaboloss712",
@@ -80,7 +81,8 @@ export const projectsData: Project[] = [
     status: "Completed",
     date: "2025.10 ~ 2025.11",
     image: "/projects/hrv-sleep.png",
-    teamSize: "개인 프로젝트",
+    projectType: "team",
+    teamSize: "6명 (프론트 2명, 백엔드 1명, AI 3명)",
     myRole: `- MLflow를 통한 성능 분석 자동화 파이프라인 구축
 - DVC와 S3를 활용하여 원본 데이터셋 및 전처리 데이터셋 관리
 - ECG/PPG 신호에서 HRV 피처 추출 로직 구현
@@ -151,6 +153,7 @@ MLflow로 실험을 체계적으로 관리하고, DVC + AWS S3로 대용량 생�
     status: "Completed",
     date: "2025.07 ~ 2025.08",
     image: "/projects/moodrop.png",
+    projectType: "team",
     teamSize: "6명 (백엔드 2명, 프론트 1명, 임베디드 3명)",
     myRole: `백엔드 개발 및 IoT 디바이스 연동 담당
 - 향수 제조 디바이스와 백엔드 서버 간 MQTT 통신 프로토콜 설계 및 구현
@@ -215,7 +218,8 @@ MQTT를 통한 디바이스 제어와 WebSocket을 통한 실시간 상태 모�
     date: "2025.07 ~ 2025.08",
     link: "https://github.com/Diaboloss712/Belcro",
     image: "/projects/belcro.png",
-    teamSize: "1명",
+    projectType: "personal",
+    teamSize: "개인 프로젝트",
     myRole: `AI/백엔드 개발 및 성능 최적화 담당
 - Bootstrap 공식 문서 크롤링 및 RAG 파이프라인 설계
 - LangChain 기반 문서 파싱, Pinecone 벡터 인덱싱 구현
@@ -260,6 +264,7 @@ MQTT를 통한 디바이스 제어와 WebSocket을 통한 실시간 상태 모�
     date: "2025.04 ~ 2025.04",
     link: "https://github.com/Diaboloss712/MCP_Auto-GIt-Convention",
     image: "/projects/mcp-git.png",
+    projectType: "personal",
     teamSize: "개인 프로젝트",
     myRole: `MCP 서버 설계 및 구현
 - FastAPI-MCP 기반 MCP 프로토콜 서버 구현
@@ -292,6 +297,7 @@ GitHub API를 연동하여 일일 커밋 여부를 확인하고, 커밋이 없�
     status: "Completed",
     date: "2025.08 ~ 2025.09",
     image: "/projects/moodify.png",
+    projectType: "team",
     teamSize: "6명 (백엔드 2명, Unity 3명, 프론트 1명)",
     myRole: `백엔드 개발 및 IoT 통신 구조 설계
 - FastAPI 기반 MQTT + WebSocket 양방향 통신 아키텍처 설계
@@ -344,10 +350,7 @@ Future 패턴을 활용한 비동기 status 응답 대기 메커니즘으로 MQT
       "Future 패턴으로 비동기 응답 대기 메커니즘을 구현하며 Python asyncio의 동시성 제어 기법을 학습하였습니다.",
       "Capabilities 기반 동적 라우팅으로 디바이스 타입 확장 시 코드 수정 없이 JSON 설정만 변경하는 유연한 설계를 경험하였습니다.",
       "MQTT 콜백 쓰레드와 FastAPI 이벤트 루프 분리 문제를 해결하며 멀티쓰레드 환경에서의 비동기 프로그래밍 노하우를 체등하였습니다."
-    ],
-    images: {
-      overview: ["/projects/moodify-architecture.png"]
-    }
+    ]
   },
   {
     id: 6,
@@ -360,7 +363,8 @@ Future 패턴을 활용한 비동기 status 응답 대기 메커니즘으로 MQT
     date: "2025.05 ~ 2025.08",
     link: "https://github.com/Diaboloss712/mcp-test-backend",
     image: "/projects/mcp-test.png",
-    teamSize: "개인 프로젝트",
+    projectType: "team",
+    teamSize: "2명 (백엔드 2명)",
     myRole: `백엔드 아키텍처 설계 및 TDD 개발
 - FastAPI + SQLAlchemy 2.0 비동기 아키텍처 설계
 - pytest 기반 TDD/BDD로 유저 도메인 구현
@@ -414,7 +418,9 @@ SQLAlchemy 2.0 비동기 전환 과정에서 테스트 환경의 세션 충돌 �
     tech: ["React", "TypeScript", "Tailwind CSS", "Supabase", "Vite"],
     status: "Live",
     date: "2025",
-    image: "/projects/personal-website.png"
+    image: "/projects/personal-website.png",
+    projectType: "personal",
+    teamSize: "개인 프로젝트"
   }
 ];
 
@@ -434,7 +440,7 @@ export const statusColors: Record<string, string> = {
   'Completed': 'bg-blue-500',
   'Live': 'bg-emerald-500',
   'In Progress': 'bg-amber-500',
+  'Refactoring': 'bg-orange-500',
   'Prototype': 'bg-purple-500',
-  'Archived': 'bg-slate-400',
-  'Refactoring': 'bg-orange-500'
+  'Archived': 'bg-slate-400'
 };

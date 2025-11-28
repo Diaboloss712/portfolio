@@ -56,7 +56,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
             return (
               <button
                 key={portfolio.id}
-                onClick={() => onNavigate(portfolio.id)}
+                onClick={() => onNavigate(`/portfolio/${portfolio.id.replace('portfolio-', '')}`)}
                 className="group relative overflow-hidden bg-white rounded-2xl border-2 border-slate-200 p-8 text-left transition-all duration-300 hover:border-transparent hover:shadow-2xl hover:-translate-y-2"
               >
                 {/* Gradient Background on Hover */}

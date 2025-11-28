@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
             </span>
           </p>
           <p className="text-xs text-slate-500 mt-1">
-            {currentYear} ~ 신입 개발자
+            Diaboloss712@gmail.com
           </p>
         </div>
       </div>

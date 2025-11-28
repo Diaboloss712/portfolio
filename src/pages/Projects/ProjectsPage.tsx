@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Folder, Search } from 'lucide-react';
+import { Folder, Search, Printer } from 'lucide-react';
 import Input from '@components/Input';
+import Button from '@components/Button';
 import ProjectDetailCard from './ProjectDetailCard';
 import { projectsData } from '@utils/constants';
 
@@ -10,6 +11,10 @@ interface ProjectsPageProps {
 
 const ProjectsPage: React.FC<ProjectsPageProps> = ({ onNavigate }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   const filtered = projectsData
     .filter(project => 
@@ -44,18 +49,28 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ onNavigate }) => {
           </p>
         </div>
 
-        <div className="relative group max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4 group-focus-within:text-blue-500 transition-colors" />
-          <Input 
-            placeholder="Search projects, tech stack..."
-            className="pl-10 h-11 bg-white shadow-sm border-slate-200 focus:border-blue-500"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+        <div className="flex justify-between items-center">
+          <div className="relative group max-w-md flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4 group-focus-within:text-blue-500 transition-colors" />
+            <Input 
+              placeholder="Search projects, tech stack..."
+              className="pl-10 h-11 bg-white shadow-sm border-slate-200 focus:border-blue-500"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <Button 
+            variant="outline" 
+            onClick={handlePrint}
+            className="gap-2 ml-4 print:hidden"
+          >
+            <Printer size={16} />
+            출력하기
+          </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6 border-y border-slate-200">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 py-6 border-y border-slate-200">
         <div className="text-center">
           <div className="text-2xl font-bold text-slate-900">{projectsData.length}</div>
           <div className="text-sm text-slate-500">전체 프로젝트</div>
@@ -71,6 +86,12 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ onNavigate }) => {
             {projectsData.filter(p => p.status === 'Completed').length}
           </div>
           <div className="text-sm text-slate-500">Completed</div>
+        </div>
+        <div className="text-center">
+          <div className="text-2xl font-bold text-orange-600">
+            {projectsData.filter(p => p.status === 'Refactoring').length}
+          </div>
+          <div className="text-sm text-slate-500">Refactoring</div>
         </div>
         <div className="text-center">
           <div className="text-2xl font-bold text-amber-600">

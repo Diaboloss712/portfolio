@@ -1,8 +1,14 @@
 import React from 'react';
+import { ArrowLeft } from 'lucide-react';
 import { personalInfo, projectsData } from '@utils/constants';
 import './PDFPortfolio.css';
 
-const PDFPortfolio: React.FC = () => {
+interface PDFPortfolioProps {
+  portfolioType?: 'backend' | 'fullstack' | 'ai' | 'all';
+  onNavigate?: (tab: string) => void;
+}
+
+const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNavigate }) => {
   // 카테고리별 프로젝트 필터링
   const backendProjects = projectsData.filter(p => 
     p.category.includes('Backend') || p.category.includes('IoT')
@@ -14,9 +20,27 @@ const PDFPortfolio: React.FC = () => {
     p.category.includes('AI') || p.category.includes('MLOps') || p.category.includes('LLM')
   );
 
+  const shouldShowBackend = portfolioType === 'all' || portfolioType === 'backend';
+  const shouldShowFullstack = portfolioType === 'all' || portfolioType === 'fullstack';
+  const shouldShowAI = portfolioType === 'all' || portfolioType === 'ai';
+
   return (
     <div className="pdf-container bg-white text-black">
+      {/* 뒤로가기 버튼 - 출력 시 숨김 */}
+      {onNavigate && (
+        <div className="fixed top-4 left-4 z-50 print:hidden">
+          <button
+            onClick={() => onNavigate('/')}
+            className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow-lg hover:bg-slate-50 transition-colors border border-slate-200"
+          >
+            <ArrowLeft size={20} />
+            <span className="font-medium">뒤로가기</span>
+          </button>
+        </div>
+      )}
+
       {/* Backend 포트폴리오 페이지 */}
+      {shouldShowBackend && (
       <section className="pdf-page pdf-page--cover">
         <div className="text-center mb-12">
           <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-emerald-200">
@@ -100,8 +124,10 @@ const PDFPortfolio: React.FC = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* Backend 프로젝트 페이지 */}
+      {shouldShowBackend && (
       <section className="pdf-page">
         <h1 className="text-3xl font-bold mb-8 text-center border-b-2 border-emerald-600 pb-4">
           Backend Projects
@@ -180,8 +206,10 @@ const PDFPortfolio: React.FC = () => {
           ))}
         </div>
       </section>
+      )}
 
       {/* Full-stack 포트폴리오 페이지 */}
+      {shouldShowFullstack && (
       <section className="pdf-page">
         <div className="text-center mb-12">
           <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-indigo-200">
@@ -230,8 +258,10 @@ const PDFPortfolio: React.FC = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* Full-stack 프로젝트 페이지 */}
+      {shouldShowFullstack && (
       <section className="pdf-page">
         <h1 className="text-3xl font-bold mb-8 text-center border-b-2 border-indigo-600 pb-4">
           Full-stack Projects
@@ -310,8 +340,10 @@ const PDFPortfolio: React.FC = () => {
           ))}
         </div>
       </section>
+      )}
 
       {/* AI 포트폴리오 페이지 */}
+      {shouldShowAI && (
       <section className="pdf-page">
         <div className="text-center mb-12">
           <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-purple-200">
@@ -360,8 +392,10 @@ const PDFPortfolio: React.FC = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* AI 프로젝트 페이지 */}
+      {shouldShowAI && (
       <section className="pdf-page">
         <h1 className="text-3xl font-bold mb-8 text-center border-b-2 border-purple-600 pb-4">
           AI / MLOps Projects
@@ -440,6 +474,7 @@ const PDFPortfolio: React.FC = () => {
           ))}
         </div>
       </section>
+      )}
     </div>
   );
 };

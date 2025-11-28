@@ -56,21 +56,20 @@ const WriteModal: React.FC<WriteModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-slate-950/40 z-[100] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
-      <Card className="w-full max-w-2xl shadow-2xl animate-in zoom-in duration-200 border-none flex flex-col max-h-[90vh]">
-        <CardHeader className="flex flex-row items-center justify-between border-b pb-4 shrink-0">
-          <div>
+      <div className="relative w-full max-w-2xl">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={onClose} 
+          className="absolute -top-12 right-0 h-10 w-10 rounded-full bg-white hover:bg-slate-100 z-10 shadow-lg"
+        >
+          <X size={20} />
+        </Button>
+        <Card className="w-full shadow-2xl animate-in zoom-in duration-200 border-none flex flex-col max-h-[90vh]">
+          <CardHeader className="border-b pb-4 shrink-0">
             <CardTitle>Create TIL</CardTitle>
             <CardDescription>Write using Markdown. Images via URL.</CardDescription>
-          </div>
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={onClose} 
-            className="h-8 w-8 rounded-full"
-          >
-            <X size={18} />
-          </Button>
-        </CardHeader>
+          </CardHeader>
         
         <form onSubmit={handleSubmit} className="flex flex-col overflow-hidden h-full">
           <CardContent className="space-y-5 pt-6 overflow-y-auto flex-1 custom-scrollbar">
@@ -156,6 +155,7 @@ const WriteModal: React.FC<WriteModalProps> = ({ isOpen, onClose }) => {
           </CardFooter>
         </form>
       </Card>
+      </div>
     </div>
   );
 };

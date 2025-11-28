@@ -151,3 +151,80 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Portfolio Print Styles */
+@media print {
+  @page {
+    size: A4;
+    margin: 16mm 10mm;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Header 숨기기 */
+  header {
+    display: none !important;
+  }
+
+  /* Main layout 패딩 조정 */
+  main {
+    max-width: 100% !important;
+    padding: 0 18mm !important;
+    margin: 0 !important;
+  }
+
+  /* 간격 조정 */
+  .space-y-12 > * + * {
+    margin-top: 1.5rem !important;
+  }
+
+  /* 섹션 간격 */
+  section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 1rem !important;
+  }
+
+  /* 프로젝트 카드 간격 */
+  .grid > * {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* 배경색 유지 */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 링크 스타일 */
+  a {
+    text-decoration: none;
+  }
+
+  /* 그림자 제거 (인쇄에서는 불필요) */
+  .shadow-lg,
+  .shadow-xl,
+  .shadow-2xl {
+    box-shadow: none !important;
+  }
+
+  /* 여백 최적화 */
+  .py-12 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  .py-8 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  /* 테두리 간소화 */
+  .border-4 {
+    border-width: 2px !important;
+  }
+}

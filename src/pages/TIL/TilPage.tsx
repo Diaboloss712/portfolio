@@ -43,7 +43,9 @@ const TilPage: React.FC = () => {
       setTils(data);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleDelete = async (id: string) => {
@@ -62,6 +64,17 @@ const TilPage: React.FC = () => {
     (post.tags && post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())))
   );
 
+  const handleWriteClick = () => {
+    const password = prompt('TIL 작성 비밀번호를 입력하세요:');
+    const correctPassword = import.meta.env.VITE_TIL_PASSWORD || 'admin1234';
+    
+    if (password === correctPassword) {
+      setIsWriteOpen(true);
+    } else if (password !== null) {
+      alert('비밀번호가 올바르지 않습니다.');
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 py-6 border-b border-slate-200">
@@ -70,7 +83,7 @@ const TilPage: React.FC = () => {
           <p className="text-slate-500 mt-1">Live Supabase DB • Markdown Supported</p>
         </div>
         <Button 
-          onClick={() => setIsWriteOpen(true)} 
+          onClick={handleWriteClick} 
           className="shrink-0 shadow-md"
         >
           <PenTool className="mr-2 h-4 w-4" /> Write Post

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Server, Layers } from 'lucide-react';
+import { Server, Layers, Printer, ArrowLeft } from 'lucide-react';
 import { SiSpring, SiFastapi, SiPostgresql, SiMqtt, SiDocker } from 'react-icons/si';
+import Button from '@components/Button';
 import ProjectCard from './ProjectCard';
 import { projectsData } from '@utils/constants';
 
@@ -15,6 +16,26 @@ const BackendPortfolio: React.FC<BackendPortfolioProps> = ({ onNavigate }) => {
 
   return (
     <div className="space-y-12 animate-in fade-in duration-500">
+      {/* \ub4a4\ub85c\uac00\uae30 & PDF \ucd9c\ub825 \ubc84\ud2bc */}
+      <div className="flex justify-between items-center print:hidden">
+        <Button 
+          variant="ghost" 
+          onClick={() => onNavigate('/portfolio')}
+          className="gap-2"
+        >
+          <ArrowLeft size={16} />
+          포트폴리오 목록
+        </Button>
+        <Button 
+          variant="outline" 
+          onClick={() => window.print()}
+          className="gap-2"
+        >
+          <Printer size={16} />
+          출력하기
+        </Button>
+      </div>
+
       {/* Hero Section */}
       <section className="text-center py-12 space-y-6">
         <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-emerald-100 shadow-lg">
@@ -105,7 +126,7 @@ const BackendPortfolio: React.FC<BackendPortfolioProps> = ({ onNavigate }) => {
               desc: ['Moodrop 프로젝트에서 향수 레시피, 사용자, 제조 이력 간 관계를 ER 다이어그램으로 설계하고 외래키 제약조건으로 데이터 무결성을 보장하였습니다.', '인덱스를 적절히 설정하여 조회 성능을 최적화하고, 트랜잭션 격리 수준을 이해하여 동시성 제어를 구현하였습니다.']
             },
             { 
-              name: 'MQTT / WebSocket', 
+              name: 'WebSocket / Mqtt', 
               level: 3,
               icon: <SiMqtt className="w-5 h-5 text-purple-600" />,
               desc: ['Moodify 프로젝트에서 MQTT QoS 레벨을 메시지 종류별로 차등화(일반 메시지 QoS 0, commit 메시지 QoS 1)하여 실시간성과 신뢰성을 균형있게 확보하였습니다.', 'WebSocket 세션을 (device_type, device_id) 키로 관리하여 특정 디바이스 상태 변화 시 해당 클라이언트에만 선택적으로 브로드캐스트하였습니다.']

@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Github, Mail, Terminal } from 'lucide-react';
-import Button from '@components/Button';
 import { personalInfo, navigationItems } from '@utils/constants';
 
-interface HeaderProps {
-  activeTab: string;
-  onNavigate: (tab: string) => void;
-}
-
-const Header: React.FC<HeaderProps> = ({ activeTab, onNavigate }) => {
+const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
         <div 
           className="flex items-center gap-2 font-bold text-lg cursor-pointer mr-8 hover:opacity-80 transition-opacity"
-          onClick={() => onNavigate('home')}
+          onClick={() => navigate('/')}
         >
           <div className="w-8 h-8 bg-slate-950 text-white rounded-md flex items-center justify-center shadow-sm hover:bg-slate-800 transition-colors">
             <Terminal size={18} />
@@ -26,12 +23,12 @@ const Header: React.FC<HeaderProps> = ({ activeTab, onNavigate }) => {
 
         <div className="flex flex-1 items-center justify-between">
           <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
-            {navigationItems.map((item) => (
+            {navigationItems.filter(item => item.id !== 'pdf').map((item) => (
               <button
                 key={item.id}
-                onClick={() => onNavigate(item.id)}
+                onClick={() => navigate(item.path)}
                 className={`px-4 py-2 rounded-md transition-all duration-200 ${
-                  activeTab === item.id 
+                  location.pathname === item.path
                     ? 'text-slate-950 bg-slate-100 font-semibold' 
                     : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                 }`}
@@ -41,11 +38,19 @@ const Header: React.FC<HeaderProps> = ({ activeTab, onNavigate }) => {
             ))}
           </nav>
           <div className="flex items-center gap-2">
-            <a href={personalInfo.github} target="_blank" rel="noreferrer">
-              <Button variant="ghost" size="icon" icon={Github} />
+            <a 
+              href={personalInfo.github} 
+              target="_blank" 
+              rel="noreferrer"
+              className="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
+            >
+              <Github size={18} />
             </a>
-            <a href={`mailto:${personalInfo.email}`}>
-              <Button variant="ghost" size="icon" icon={Mail} />
+            <a 
+              href={`mailto:${personalInfo.email}`}
+              className="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
+            >
+              <Mail size={18} />
             </a>
           </div>
         </div>
@@ -61,15 +66,15 @@ const Header: React.FC<HeaderProps> = ({ activeTab, onNavigate }) => {
       {isMobileMenuOpen && (
         <div className="md:hidden border-b border-slate-200 bg-white animate-in slide-in-from-top">
           <div className="px-4 py-4 space-y-1">
-            {navigationItems.map((item) => (
+            {navigationItems.filter(item => item.id !== 'pdf').map((item) => (
               <button
                 key={item.id}
                 onClick={() => {
-                  onNavigate(item.id);
+                  navigate(item.path);
                   setIsMobileMenuOpen(false);
                 }}
                 className={`block w-full text-left px-4 py-3 rounded-md text-base font-medium transition-colors ${
-                  activeTab === item.id 
+                  location.pathname === item.path
                     ? 'bg-slate-100 text-slate-950' 
                     : 'text-slate-500 hover:bg-slate-50'
                 }`}

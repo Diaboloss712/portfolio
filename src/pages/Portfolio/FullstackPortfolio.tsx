@@ -1,6 +1,7 @@
 import React from 'react';
-import { Globe, Layers, Server } from 'lucide-react';
-import { SiReact, SiTailwindcss, SiPostgresql, SiSpring, SiFastapi, SiMqtt } from 'react-icons/si';
+import { Globe, Layers, Server, Printer, ArrowLeft } from 'lucide-react';
+import { SiReact, SiTypescript, SiTailwindcss, SiPostgresql, SiMysql, SiSpring, SiFastapi, SiDjango, SiMqtt } from 'react-icons/si';
+import Button from '@components/Button';
 import ProjectCard from './ProjectCard';
 import { projectsData } from '@utils/constants';
 
@@ -15,6 +16,26 @@ const FullstackPortfolio: React.FC<FullstackPortfolioProps> = ({ onNavigate }) =
 
   return (
     <div className="space-y-12 animate-in fade-in duration-500">
+      {/* 뒤로가기 & 출력 버튼 */}
+      <div className="flex justify-between items-center print:hidden">
+        <Button 
+          variant="ghost" 
+          onClick={() => onNavigate('/portfolio')}
+          className="gap-2"
+        >
+          <ArrowLeft size={16} />
+          포트폴리오 목록
+        </Button>
+        <Button 
+          variant="outline" 
+          onClick={() => window.print()}
+          className="gap-2"
+        >
+          <Printer size={16} />
+          출력하기
+        </Button>
+      </div>
+
       {/* Hero Section */}
       <section className="text-center py-12 space-y-6">
         <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-indigo-100 shadow-lg">
@@ -94,7 +115,13 @@ const FullstackPortfolio: React.FC<FullstackPortfolioProps> = ({ onNavigate }) =
                 { 
                   name: 'React / TypeScript', 
                   level: 2,
-                  icon: <SiReact className="w-5 h-5 text-blue-500" />,
+                  icon: (
+                    <div className="flex gap-1">
+                      <SiReact className="w-5 h-5 text-blue-500" />
+                      <span className="text-slate-400">/</span>
+                      <SiTypescript className="w-5 h-5 text-blue-600" />
+                    </div>
+                  ),
                   desc: ['현재 포트폴리오 사이트를 React + TypeScript + Vite로 구축하여 컴포넌트 기반 설계와 상태 관리 패턴을 학습하였습니다.', 'useState, useEffect 등 기본 Hooks를 활용한 상태 관리와 props drilling 최소화를 위한 컴포넌트 구조를 설계하였습니다.']
                 },
                 { 
@@ -144,17 +171,29 @@ const FullstackPortfolio: React.FC<FullstackPortfolioProps> = ({ onNavigate }) =
                 { 
                   name: 'FastAPI / Django', 
                   level: 3,
-                  icon: <SiFastapi className="w-5 h-5 text-teal-600" />,
+                  icon: (
+                    <div className="flex gap-1">
+                      <SiFastapi className="w-5 h-5 text-teal-600" />
+                      <span className="text-slate-400">/</span>
+                      <SiDjango className="w-5 h-5 text-green-700" />
+                    </div>
+                  ),
                   desc: ['Moodify 프로젝트에서 MQTT 브로커와 WebSocket 서버를 FastAPI에 통합하여 Unity 시뮬레이터와 웹 프론트 간 실시간 양방향 통신을 구현하였습니다.', 'Capabilities 기반 동적 라우팅으로 디바이스 타입 확장 시 코드 수정 없이 JSON 설정만 변경하는 유연한 아키텍처를 설계하였습니다.']
                 },
                 { 
                   name: 'PostgreSQL / MySQL', 
                   level: 3,
-                  icon: <SiPostgresql className="w-5 h-5 text-blue-600" />,
+                  icon: (
+                    <div className="flex gap-1">
+                      <SiPostgresql className="w-5 h-5 text-blue-600" />
+                      <span className="text-slate-400">/</span>
+                      <SiMysql className="w-5 h-5 text-blue-500" />
+                    </div>
+                  ),
                   desc: ['Moodrop 프로젝트에서 향수 레시피, 사용자, 제조 이력 간 관계를 ER 다이어그램으로 설계하고 외래키 제약조건으로 데이터 무결성을 보장하였습니다.', '인덱스를 적절히 설정하여 조회 성능을 최적화하고, 트랜잭션 격리 수준을 이해하여 동시성 제어를 구현하였습니다.']
                 },
                 { 
-                  name: 'MQTT / WebSocket', 
+                  name: 'WebSocket / Mqtt', 
                   level: 3,
                   icon: <SiMqtt className="w-5 h-5 text-purple-600" />,
                   desc: ['Moodify 프로젝트에서 Unity 시뮬레이터와 MQTT로 연동하고, WebSocket으로 웹 프론트에 실시간 상태를 전송하는 양방향 통신 구조를 설계하였습니다.', 'MQTT QoS 레벨을 메시지 종류별로 차등화하여 실시간성과 신뢰성을 균형있게 확보하고, Future 패턴으로 비동기 응답 대기를 구현하였습니다.']
@@ -188,40 +227,36 @@ const FullstackPortfolio: React.FC<FullstackPortfolioProps> = ({ onNavigate }) =
 
       {/* Introduction */}
       <section className="bg-slate-50 p-8 rounded-2xl border border-slate-200">
-        <h2 className="text-2xl font-bold mb-6 text-slate-900">Why Full-stack?</h2>
+        <h2 className="text-2xl font-bold mb-6 text-slate-900">프론트엔드와 백엔드 모두 경험한 프로젝트</h2>
         <div className="space-y-4 text-slate-700 leading-relaxed">
-          <h3 className="text-lg font-semibold text-slate-900 mt-4">전체 흐름을 이해하면 더 나은 설계가 가능합니다</h3>
+          <h3 className="text-lg font-semibold text-slate-900 mt-4">전체 흐름을 이해하는 개발</h3>
           <p>
-            프론트엔드에서 어떤 데이터가 필요한지 알면 백엔드 API를 효율적으로 설계할 수 있고, 
-            백엔드의 제약을 이해하면 프론트엔드에서 적절한 캐싱과 상태 관리를 할 수 있습니다.
-            저는 데이터 흐름의 시작점부터 끝까지 설계하고 구현하는 것에 관심이 많습니다.
+            백엔드 중심으로 개발하지만, 프론트엔드에서 어떤 데이터가 필요한지 이해하면 더 효율적인 API를 설계할 수 있습니다.
+            <br></br>
+            아래 프로젝트들은 백엔드 개발을 주도하면서도 프론트엔드와의 연동, 실시간 통신, IoT 디바이스 통합 등을 경험한 프로젝트입니다.
           </p>
           
-          <h3 className="text-lg font-semibold text-slate-900 mt-6">Moodrop: 하드웨어 - 백엔드 - 프론트 통합</h3>
-          <p>
-            <strong className="text-slate-900">향수 제조 디바이스(하드웨어)</strong> - <strong className="text-slate-900">Spring Boot 백엔드</strong> - <strong className="text-slate-900">WebSocket 대시보드(프론트엔드)</strong>를 모두 연동했습니다.
-          </p>
+          <h3 className="text-lg font-semibold text-slate-900 mt-6">Moodrop: 도메인 모델링과 IoT 연동</h3>
           <ul className="list-disc list-inside space-y-2 ml-4">
-            <li><strong>도메인 설계:</strong> 전체 30개 이상 테이블 중 향수 로그 관련 도메인 설계 담당</li>
-            <li><strong>MQTT 프로토콜:</strong> 디바이스 제어 명령을 MQTT로 전송, 제조 상태를 실시간 수신</li>
-            <li><strong>비동기 처리:</strong> CompletableFuture로 디바이스 응답 비동기 처리, In-flight 패턴으로 동시성 제어</li>
-            <li><strong>WebSocket 실시간 통신:</strong> 제조 완료 시 프론트엔드에 즉시 알림, 대시보드에서 진행 상황 모니터링</li>
+            <li><strong>비즈니스 로직 캡슐화:</strong> 향수 노트(Top/Middle/Base) 구성 규칙을 JPA 엔티티와 서비스 레이어로 캡슐화. Top 20%, Middle 30%, Base 50% 최소 비율 보장 로직 구현</li>
+            <li><strong>MQTT 프로토콜 설계:</strong> 향료 슬롯·용량·순서를 표현하는 PerfumeProtocol 설계, 제조 명령을 MQTT 메시지로 인코딩</li>
+            <li><strong>동시성 제어:</strong> In-flight 패턴으로 중복 요청 방지 (putIfAbsent/remove/timeout 조합)</li>
+            <li><strong>실시간 모니터링:</strong> 제조 완료 시 MQTT 결과를 WebSocket으로 푸시, 대시보드에서 진행 상황 실시간 추적</li>
           </ul>
 
-          <h3 className="text-lg font-semibold text-slate-900 mt-6">Moodify: Unity - FastAPI - React 통합</h3>
-          <p>
-            <strong className="text-slate-900">Unity 시뮬레이터</strong> - <strong className="text-slate-900">FastAPI 백엔드</strong> - <strong className="text-slate-900">React 프론트엔드</strong>를 연결하며 IoT 통신 최적화를 경험했습니다.
-          </p>
+          <h3 className="text-lg font-semibold text-slate-900 mt-6">Moodify: MQTT QoS 최적화</h3>
           <ul className="list-disc list-inside space-y-2 ml-4">
-            <li><strong>MQTT QoS 최적화:</strong> 일반 제어 메시지는 QoS 0으로 빠르게 전송, 마지막(commit) 메시지만 QoS 1로 전송하여 실시간성과 신뢰성 확보</li>
-            <li><strong>채널 분리:</strong> Unity↔백엔드는 MQTT, 백엔드↔웹 프론트는 WebSocket/HTTP로 분리하여 프로토콜별 최적화</li>
+            <li><strong>문제 인식:</strong> QoS 1로 모든 메시지 전송 → ACK 대기로 인한 통신 지연 발생</li>
+            <li><strong>해결 전략:</strong> 일반 제어 메시지는 QoS 0으로 빠르게 전송, 마지막(commit) 메시지만 QoS 1로 전송하여 최종 상태 확실히 전달</li>
+            <li><strong>결과:</strong> 실시간성과 신뢰성을 모두 확보하는 통신 전략 구현</li>
           </ul>
 
-          <h3 className="text-lg font-semibold text-slate-900 mt-6">Personal Website: 풀스택 역량 종합</h3>
-          <p>
-            현재 포트폴리오 사이트도 <strong className="text-slate-900">React + TypeScript + Supabase</strong>로 직접 설계·구현했으며, 
-            마크다운 렌더링, TIL 블로그, 실시간 데이터 동기화까지 풀스택 개발 역량을 적용했습니다.
-          </p>
+          <h3 className="text-lg font-semibold text-slate-900 mt-6">Personal Website: React + TypeScript + Supabase</h3>
+          <ul className="list-disc list-inside space-y-2 ml-4">
+            <li><strong>컴포넌트 기반 설계:</strong> 재사용 가능한 UI 컴포넌트로 구조화하고, props drilling을 최소화한 상태 관리 구현</li>
+            <li><strong>실시간 데이터 동기화:</strong> Supabase Realtime을 활용하여 TIL 게시글 작성 시 즉시 반영</li>
+            <li><strong>마크다운 지원:</strong> react-markdown으로 TIL 블로그 콘텐츠 렌더링</li>
+          </ul>
         </div>
       </section>
 
