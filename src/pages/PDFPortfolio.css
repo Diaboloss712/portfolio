@@ -1,0 +1,155 @@
+/* PDF 전용 스타일 */
+
+.pdf-container {
+  max-width: 210mm; /* A4 너비 */
+  margin: 0 auto;
+  background: white;
+  font-family: 'Pretendard', -apple-system, sans-serif;
+}
+
+.pdf-page {
+  min-height: 297mm; /* A4 높이 */
+  padding: 25mm 20mm; /* 화면 프리뷰용: 위아래 25mm, 좌우 20mm */
+  page-break-after: always;
+  break-after: page;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* 표지(첫 페이지) 전용 클래스 */
+.pdf-page--cover {
+  /* 화면 프리뷰에서만 조금 더 내려 보이게 */
+  padding-top: 35mm;
+}
+
+.pdf-page:last-child {
+  page-break-after: auto;
+  break-after: auto;
+}
+
+/* Experience & Awards 섹션 */
+.experience-section {
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+  margin-top: 2rem;
+}
+
+.project-section {
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+  page-break-before: auto;
+  break-before: auto;
+  margin-bottom: 1.5rem;
+}
+
+/* 프로젝트 제목이 페이지 하단에 남지 않도록 */
+.project-section h2 {
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+/* 프로젝트 상세 내용 */
+.project-section ul {
+  page-break-before: avoid;
+  break-before: avoid;
+}
+
+/* 인쇄 설정 */
+@media print {
+  @page {
+    size: A4;
+    /* 모든 물리 페이지의 위/아래/좌/우 여백을 통일 */
+    margin: 16mm 10mm 16mm 10mm;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    display: none !important;
+  }
+
+  .pdf-container {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .pdf-page {
+    margin: 0;
+
+    /* 인쇄에서는 위쪽 padding 제거: 여백은 @page가 담당 */
+    padding: 0 18mm 14mm;
+
+    page-break-after: always;
+    break-after: page;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  /* 각 페이지에서 첫 요소는 margin-top 제거해서 높이 맞추기 */
+  .pdf-page > *:first-child {
+    margin-top: 0;
+  }
+
+  /* 표지 페이지만 살짝 더 내려서 시작 (사진 때문에 답답해 보이지 않게) */
+  .pdf-page--cover {
+    padding-top: 8mm;
+  }
+
+  .pdf-page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  .experience-section {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin-top: 2rem;
+  }
+
+  .project-section {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-section h2 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  .project-section ul {
+    page-break-before: avoid !important;
+    break-before: avoid !important;
+  }
+
+  /* 배경색 유지 */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+/* 화면 프리뷰용 스타일 */
+@media screen {
+  .pdf-container {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .pdf-page {
+    border: 1px solid #e5e7eb;
+    margin-bottom: 2rem;
+    background: white;
+  }
+}
