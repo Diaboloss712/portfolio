@@ -194,7 +194,7 @@ const AIPortfolio: React.FC<AIPortfolioProps> = ({ onNavigate }) => {
           <p>
             AI는 모델 성능을 높이는 것만으로 끝나지 않습니다. 
             실제 서비스로 만들려면 <strong className="text-slate-900">데이터 수집, 전처리, 특징 추출, 실험 관리, 배포, 모니터링</strong>까지 
-            전체 파이프라인을 구축해야 합니다. 저는 이 전 과정을 직접 설계하고 구현하는 것에 관심이 많습니다.
+            전체 파이프라인을 구축해야 합니다. 저는 프로젝트에서 파이프라인을 구성하거나 모델의 성능을 향상시킨 경험이 있습니다.
           </p>
           
           <h3 className="text-lg font-semibold text-slate-900 mt-6">HRV 수면 단계 분류: End-to-End MLOps</h3>
