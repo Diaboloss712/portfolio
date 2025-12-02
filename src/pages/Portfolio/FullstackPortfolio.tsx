@@ -263,7 +263,7 @@ const FullstackPortfolio: React.FC<FullstackPortfolioProps> = ({ onNavigate }) =
       {/* Projects */}
       <section>
         <h2 className="text-2xl font-bold mb-6 text-slate-900">Full-stack Projects</h2>
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-3">
           {fullstackProjects.map(project => (
             <ProjectCard key={project.id} project={project} onNavigate={onNavigate} />
           ))}

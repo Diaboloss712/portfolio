@@ -262,7 +262,7 @@ const AIPortfolio: React.FC<AIPortfolioProps> = ({ onNavigate }) => {
       {/* Projects */}
       <section>
         <h2 className="text-2xl font-bold mb-6 text-slate-900">AI / MLOps Projects</h2>
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-3">
           {aiProjects.map(project => (
             <ProjectCard key={project.id} project={project} onNavigate={onNavigate} />
           ))}

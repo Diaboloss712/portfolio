@@ -101,7 +101,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-3">
         {filtered.length > 0 ? (
           filtered.map(project => (
             <ProjectDetailCard key={project.id} project={project} onNavigate={onNavigate} />
