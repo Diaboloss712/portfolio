@@ -73,7 +73,7 @@ export const personalInfo: PersonalInfo = {
 export const projectsData: Project[] = [
   {
     id: 1,
-    title: "NapSync - PPG 데이터 기반 수면 단계 예측 서비스",
+    title: "[기업 연계] NapSync - PPG 데이터 기반 수면 단계 예측 서비스",
     category: "AI/MLOps",
     role: "ECG/PPG 신호 전처리부터 HRV 피처 추출, 모델링, 실험·데이터 버전 관리까지 전체 파이프라인 설계·구현",
     desc: "스마트워치의 PPG 데이터를 활용하여 수면 단계를 자동 분류하는 서비스",
@@ -83,12 +83,11 @@ export const projectsData: Project[] = [
     image: "/projects/hrv-sleep.png",
     projectType: "team",
     teamSize: "6명 (프론트 2명, 백엔드 1명, AI 3명)",
-    myRole: `- MLflow를 통한 성능 분석 자동화 파이프라인 구축
+    myRole: `- MLflow를 통한 성능 분석 자동화 파이프라인 구축 및 실험 관리
 - DVC와 S3를 활용하여 원본 데이터셋 및 전처리 데이터셋 관리
 - ECG/PPG 신호에서 HRV 피처 추출 로직 구현
-- CatBoost + Mamba 혼합 모델 설계 및 학습
-- MLflow 실험 관리 및 DVC + AWS S3 데이터 버전 관리`,
-    overview: `웨어러블 기기에서 수집한 생체 신호(PPG)를 활용하여 수면 단계를 자동 분류하는 서비스입니다.
+- CatBoost + Mamba 혼합 모델 설계 및 학습`,
+    overview: `오션스바이오 기업 연계 프로젝트로 웨어러블 기기에서 수집한 생체 신호(PPG)를 활용하여 수면 단계를 자동 분류하는 서비스입니다.
 PhysioNet 공개 데이터셋(ECG)을 활용하여 R-peak 검출, HRV 피처 추출, 분류 모델 학습, 시퀀스 보정까지 전체 과정을 구현하였습니다.
 다양한 그래디언트 부스팅 모델과 시계열 모델들을 학습시킨 후에 성능을 비교한 결과, CatBoost와 XGBoost, LSTM, Mamba 모델을 선택하였습니다.
 CatBoost로 1차 분류를 수행한 후, Mamba/LSTM 시퀀스 모델로 수면 단계 전이 구간의 오분류를 보정하는 2-stage 파이프라인을 설계하였습니다.
