@@ -128,7 +128,7 @@ const FullstackPortfolio: React.FC<FullstackPortfolioProps> = ({ onNavigate }) =
                   name: 'Tailwind CSS', 
                   level: 3,
                   icon: <SiTailwindcss className="w-5 h-5 text-cyan-500" />,
-                  desc: ['유틸리티 클래스를 활용한 반응형 디자인(md:, lg: 등)과 다크모드 대응 스타일링을 구현하였습니다.', 'Tailwind의 커스텀 테마 설정과 @apply 지시어를 활용한 재사용 가능한 컴포넌트 스타일링을 학습하였습니다.']
+                  desc: ['유틸리티 클래스를 활용한 반응형 디자인(md:, lg: 등)과 일관된 스타일링을 구현하였습니다.', 'Tailwind의 커스텀 테마 설정과 컴포넌트 기반 스타일링을 통해 재사용 가능한 UI 시스템을 구축하였습니다.']
                 }
               ].map(skill => (
                 <div key={skill.name}>
