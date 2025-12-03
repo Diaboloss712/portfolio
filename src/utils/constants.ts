@@ -222,7 +222,7 @@ MQTT를 통한 디바이스 제어와 WebSocket을 통한 실시간 상태 모�
     myRole: `AI/백엔드 개발 및 성능 최적화 담당
 - Bootstrap 공식 문서 크롤링 및 RAG 파이프라인 설계
 - LangChain 기반 문서 파싱, Pinecone 벡터 인덱싱 구현
-- Pandas → PyArrow 마이그레이션으로 데이터 로딩 성능 84% 개선
+- Pandas → PyArrow 마이그레이션으로 Docker 빌드 안정화 및 I/O 성능 개선
 - Jenkins + Docker CI/CD 파이프라인 구축 및 보안 강화`,
     overview: `Belcro는 Bootstrap 공식 문서를 학습하여 사용자 질문에 답변하는 RAG(Retrieval-Augmented Generation) 시스템입니다.
 크롤링한 문서를 섹션·컴포넌트 단위로 파싱하고, Pinecone 벡터 DB에 임베딩하여 유사도 기반 검색을 수행하였습니다.`,
@@ -230,21 +230,21 @@ MQTT를 통한 디바이스 제어와 WebSocket을 통한 실시간 상태 모�
       "Python: 크롤링(BeautifulSoup) + AI(LangChain) + 데이터 처리(Pandas/PyArrow)를 한 언어로 통합하여 개발 생산성을 극대화하였습니다. 라이브러리 생태계가 풍부하여 RAG 파이프라인 구축에 최적이었습니다.",
       "FastAPI: Django보다 가볍고 비동기 처리가 최적화되어 있어 선택하게 되었습니다. Pydantic 기반 자동 검증으로 타입 안정성을 확보하였습니다.",
       "Pinecone: PostgreSQL + pgvector 대비 스키마 자유도가 높고 설정이 간편하여 벡터 인덱싱/검색 전용 솔루션으로 성능이 우수하였습니다. 네임스페이스 기능으로 문서 버전 관리가 용이하였습니다.",
-      "PyArrow: Pandas 대비 I/O가 최적화되어 데이터 로딩 시간을 2.5초에서 0.4초로 84% 단축하였습니다. 필요한 컬럼만 읽어들여 메모리 사용량을 감소시켰습니다.",
+      "PyArrow: 사전 컴파일된 wheel 제공으로 저사양 환경에서도 설치가 용이하고, columnar storage를 활용한 I/O 최적화로 필요한 컬럼만 선택적으로 읽어 메모리 효율성을 개선하였습니다.",
       "Docker + Jenkins: 코드 푸시 시 자동 빌드·배포 파이프라인을 구축하여 수동 배포 시간을 절감하였습니다."
     ],
     details: [
-      "Pandas → PyArrow 마이그레이션으로 데이터 로딩 시간을 84% 개선 (2.5초 → 0.4초)하였고, 필요 컴럼만 읽어 I/O를 최적화하여 쿼리 응답 시간을 단축하였습니다.",
+      "Pandas → PyArrow 마이그레이션으로 Jenkins Docker 빌드 시 설치 실패 문제를 해결하였고, columnar storage를 활용하여 필요한 컬럼만 선택적으로 읽어 I/O 성능과 메모리 효율성을 개선하였습니다.",
       "FastAPI RAG 백엔드 API를 구현하였고, Jenkins + Docker 파이프라인을 구성하여 코드 푸시 시 자동 빌드·배포를 수행하였습니다.",
       "Jenkins 환경변수 스코프를 최소화하고 민감 정보는 Credential로 분리하여 파이프라인 보안을 강화하였습니다."
     ],
     issues: [
       {
-        title: "저사양 인스턴스에서 데이터 로딩 성능 문제",
-        cause: "AWS 프리티어 t2.micro 인스턴스(1GB RAM)에서 Pandas를 사용해 Bootstrap 문서 CSV 파일(200MB+)을 로딩할 때, 설치 자체가 실패하거나 로딩에 2.5초 이상 소요되었습니다. 메모리 부족으로 인해 서버 응답 시간이 지연되고, 일부 요청에서는 타임아웃이 발생하는 문제가 있었습니다.",
-        solution: "Pandas를 PyArrow로 전환하였습니다. read_csv() 대신 PyArrow의 read_table()을 사용하고, 필요한 컬럼만 선택적으로 읽는 방식으로 메모리 사용량을 감소시켰습니다. 또한 Parquet 포맷으로 데이터를 저장하여 압축률과 I/O 성능을 최적화하였습니다.",
-        result: "데이터 로딩 시간이 2.5초에서 0.4초로 84% 개선되었고, 저사양 인스턴스에서도 안정적으로 설치 및 실행되는 것을 확인하였습니다. 메모리 사용량이 약 60% 감소하여 서버 응답 시간이 1초 이내로 단축되었습니다.",
-        comparison: "Pandas 사용 시 평균 응답 시간 3.2초, PyArrow 적용 후 0.6초로 81% 개선되었으며, 타임아웃 발생률이 15%에서 0%로 감소하였습니다."
+        title: "Jenkins Docker 빌드 시 Pandas 설치 실패",
+        cause: "Jenkins CI/CD 파이프라인 구축 중 Docker 빌드 단계에서 Pandas 설치가 실패하는 문제가 발생했습니다. 저사양 인스턴스에서 Pandas의 의존성(NumPy, SciPy 등) 컴파일 과정에서 메모리 부족으로 인해 설치가 중단되었습니다.",
+        solution: "Pandas를 PyArrow로 전환하였습니다. PyArrow는 사전 컴파일된 wheel을 제공하여 설치가 간편하고, 메모리 사용량도 적습니다. read_csv() 대신 read_table()을 사용하고, to_pylist()로 데이터를 로드하는 방식으로 변경하였습니다. Parquet 포맷의 columnar storage를 활용하여 I/O 효율성도 개선하였습니다.",
+        result: "Docker 이미지 빌드가 성공적으로 완료되었고, 저사양 환경에서도 안정적으로 설치 및 실행되는 것을 확인하였습니다. Parquet의 columnar storage 특성 덕분에 필요한 컬럼만 선택적으로 읽어 메모리 효율성이 향상되었습니다.",
+        comparison: "Pandas 설치 실패 → PyArrow로 전환하여 Docker 빌드 성공, 저사양 환경에서도 안정적 동작 확인."
       },
     ],
     retrospect: [
