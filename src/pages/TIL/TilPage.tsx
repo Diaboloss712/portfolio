@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Search, BookOpen, PenTool } from 'lucide-react';
+import { Search, BookOpen, PenTool, AlertCircle } from 'lucide-react';
 import Button from '@components/Button';
 import Input from '@components/Input';
 import Spinner from '@components/Spinner';
 import TilCard from './TilCard';
 import WriteModal from './WriteModal';
 import ReadModal from './ReadModal';
-import { fetchTilPosts, subscribeTilPosts, deleteTilPost } from '@lib/supabase';
+import { fetchTilPosts, subscribeTilPosts, deleteTilPost, isSupabaseConfigured } from '@lib/supabase';
 
 interface Post {
   id: string;

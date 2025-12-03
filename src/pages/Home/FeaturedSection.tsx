@@ -85,7 +85,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ onNavigate }) => {
         </div>
         <Button 
           variant="ghost" 
-          onClick={() => onNavigate('portfolio')} 
+          onClick={() => onNavigate('projects')} 
           className="hidden sm:flex"
         >
           View All Projects <ArrowRight size={16} className="ml-2" />
@@ -99,7 +99,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ onNavigate }) => {
       </div>
 
       <div className="mt-8 text-center sm:hidden">
-        <Button variant="outline" onClick={() => onNavigate('portfolio')}>
+        <Button variant="outline" onClick={() => onNavigate('projects')}>
           View All Projects <ArrowRight size={16} className="ml-2" />
         </Button>
       </div>

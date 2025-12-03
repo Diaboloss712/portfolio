@@ -53,6 +53,34 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
         <div className="grid md:grid-cols-3 gap-6">
           {portfolios.map((portfolio) => {
             const Icon = portfolio.icon;
+            
+            // 포트폴리오별 스타일 매핑
+            const colorClasses = ({
+              'portfolio-backend': {
+                iconBg: 'bg-emerald-100',
+                iconColor: 'text-emerald-600',
+                skillBg: 'bg-emerald-50',
+                skillText: 'text-emerald-700'
+              },
+              'portfolio-fullstack': {
+                iconBg: 'bg-indigo-100',
+                iconColor: 'text-indigo-600',
+                skillBg: 'bg-indigo-50',
+                skillText: 'text-indigo-700'
+              },
+              'portfolio-ai': {
+                iconBg: 'bg-purple-100',
+                iconColor: 'text-purple-600',
+                skillBg: 'bg-purple-50',
+                skillText: 'text-purple-700'
+              }
+            } as Record<string, {iconBg: string; iconColor: string; skillBg: string; skillText: string}>)[portfolio.id] || {
+              iconBg: 'bg-slate-100',
+              iconColor: 'text-slate-600',
+              skillBg: 'bg-slate-50',
+              skillText: 'text-slate-700'
+            };
+            
             return (
               <button
                 key={portfolio.id}
@@ -64,8 +92,8 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
                 
                 {/* Content */}
                 <div className="relative z-10">
-                  <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-${portfolio.color}-100 group-hover:bg-white/20 transition-colors mb-6`}>
-                    <Icon className={`w-8 h-8 text-${portfolio.color}-600 group-hover:text-white transition-colors`} />
+                  <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl ${colorClasses.iconBg} group-hover:bg-white/20 transition-colors mb-6`}>
+                    <Icon className={`w-8 h-8 ${colorClasses.iconColor} group-hover:text-white transition-colors`} />
                   </div>
                   
                   <h2 className="text-2xl font-bold text-slate-900 group-hover:text-white transition-colors mb-3">
@@ -81,12 +109,12 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
                     {portfolio.skills.slice(0, 3).map(skill => (
                       <span 
                         key={skill}
-                        className={`text-xs px-2 py-1 rounded-md bg-${portfolio.color}-50 text-${portfolio.color}-700 group-hover:bg-white/20 group-hover:text-white transition-colors`}
+                        className={`text-xs px-2 py-1 rounded-md ${colorClasses.skillBg} ${colorClasses.skillText} group-hover:bg-white/20 group-hover:text-white transition-colors`}
                       >
                         {skill}
                       </span>
                     ))}
-                    <span className={`text-xs px-2 py-1 rounded-md bg-${portfolio.color}-50 text-${portfolio.color}-700 group-hover:bg-white/20 group-hover:text-white transition-colors`}>
+                    <span className={`text-xs px-2 py-1 rounded-md ${colorClasses.skillBg} ${colorClasses.skillText} group-hover:bg-white/20 group-hover:text-white transition-colors`}>
                       +{portfolio.skills.length - 3}
                     </span>
                   </div>
@@ -100,13 +128,6 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
               </button>
             );
           })}
-        </div>
-
-        {/* Note */}
-        <div className="text-center">
-          <p className="text-sm text-slate-400">
-            🔒 This page is accessible only via direct link
-          </p>
         </div>
       </div>
     </div>

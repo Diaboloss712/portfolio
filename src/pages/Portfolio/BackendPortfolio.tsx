@@ -1,6 +1,6 @@
 import React from 'react';
 import { Server, Layers, Printer, ArrowLeft } from 'lucide-react';
-import { SiSpring, SiFastapi, SiPostgresql, SiMqtt, SiDocker } from 'react-icons/si';
+import { SiSpring, SiFastapi, SiDjango, SiPostgresql, SiMysql, SiMqtt, SiDocker, SiJenkins, SiSocketdotio } from 'react-icons/si';
 import Button from '@components/Button';
 import ProjectCard from './ProjectCard';
 import { projectsData } from '@utils/constants';
@@ -116,25 +116,49 @@ const BackendPortfolio: React.FC<BackendPortfolioProps> = ({ onNavigate }) => {
             { 
               name: 'FastAPI / Django', 
               level: 3,
-              icon: <SiFastapi className="w-5 h-5 text-teal-600" />,
+              icon: (
+                <div className="flex gap-1">
+                  <SiFastapi className="w-5 h-5 text-teal-600" />
+                  <span className="text-slate-400">/</span>
+                  <SiDjango className="w-5 h-5 text-green-700" />
+                </div>
+              ),
               desc: ['Belcro 프로젝트에서 LangChain과 Pinecone을 연동한 RAG API 서버를 FastAPI로 구축하여 Bootstrap 문서 기반 코드 생성 기능을 구현하였습니다.', 'Moodify 프로젝트에서 MQTT 브로커와 WebSocket 서버를 FastAPI에 통합하여 Unity 시뮬레이터와 웹 프론트 간 실시간 양방향 통신을 구현하였습니다.']
             },
             { 
               name: 'PostgreSQL / MySQL', 
               level: 3,
-              icon: <SiPostgresql className="w-5 h-5 text-blue-600" />,
+              icon: (
+                <div className="flex gap-1">
+                  <SiPostgresql className="w-5 h-5 text-blue-600" />
+                  <span className="text-slate-400">/</span>
+                  <SiMysql className="w-5 h-5 text-blue-800" />
+                </div>
+              ),
               desc: ['Moodrop 프로젝트에서 향수 레시피, 사용자, 제조 이력 간 관계를 ER 다이어그램으로 설계하고 외래키 제약조건으로 데이터 무결성을 보장하였습니다.', '인덱스를 적절히 설정하여 조회 성능을 최적화하고, 트랜잭션 격리 수준을 이해하여 동시성 제어를 구현하였습니다.']
             },
             { 
               name: 'WebSocket / Mqtt', 
               level: 3,
-              icon: <SiMqtt className="w-5 h-5 text-purple-600" />,
+              icon: (
+                <div className="flex gap-1">
+                  <SiSocketdotio className="w-5 h-5 text-slate-700" />
+                  <span className="text-slate-400">/</span>
+                  <SiMqtt className="w-5 h-5 text-purple-600" />
+                </div>
+              ),
               desc: ['Moodify 프로젝트에서 MQTT QoS 레벨을 메시지 종류별로 차등화(일반 메시지 QoS 0, commit 메시지 QoS 1)하여 실시간성과 신뢰성을 균형있게 확보하였습니다.', 'WebSocket 세션을 (device_type, device_id) 키로 관리하여 특정 디바이스 상태 변화 시 해당 클라이언트에만 선택적으로 브로드캐스트하였습니다.']
             },
             { 
               name: 'Docker / Jenkins', 
               level: 3,
-              icon: <SiDocker className="w-5 h-5 text-sky-600" />,
+              icon: (
+                <div className="flex gap-1">
+                  <SiDocker className="w-5 h-5 text-sky-600" />
+                  <span className="text-slate-400">/</span>
+                  <SiJenkins className="w-5 h-5 text-red-600" />
+                </div>
+              ),
               desc: ['Belcro 프로젝트에서 Jenkins 파이프라인을 구축하여 Git Push 시 자동으로 Docker 이미지를 빌드하고 배포하는 CI/CD 워크플로우를 구현하였습니다.', 'Dockerfile 다단계 빌드와 환경변수 스코프를 stage 내부로 최소화하여 보안을 강화하고, Credential 플러그인으로 민감 정보를 안전하게 관리하였습니다.']
             }
           ].map(skill => (
