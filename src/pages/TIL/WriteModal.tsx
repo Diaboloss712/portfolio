@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Loader2 } from 'lucide-react';
+import MDEditor from '@uiw/react-md-editor';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@components/Card';
 import Button from '@components/Button';
 import Input from '@components/Input';
-import Textarea from '@components/Textarea';
-import { createTilPost } from '@lib/supabase';
+import { createTilPost, updateTilPost, fetchCategories, Category, TilPost } from '@lib/supabase';
 import { parseTags } from '@utils/helpers';
-import { categories } from '@utils/constants';
 
 interface WriteModalProps {
   isOpen: boolean;
   onClose: () => void;
+  editPost?: TilPost | null;
 }
 
 interface FormData {
@@ -21,15 +21,43 @@ interface FormData {
   content: string;
 }
 
-const WriteModal: React.FC<WriteModalProps> = ({ isOpen, onClose }) => {
+const WriteModal: React.FC<WriteModalProps> = ({ isOpen, onClose, editPost }) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [formData, setFormData] = useState<FormData>({
     title: '',
-    category: 'Backend',
+    category: '',
     summary: '',
     tags: '',
     content: ''
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      loadCategories();
+      if (editPost) {
+        setFormData({
+          title: editPost.title,
+          category: editPost.category,
+          summary: editPost.summary,
+          tags: editPost.tags.join(', '),
+          content: editPost.content
+        });
+      }
+    }
+  }, [isOpen, editPost]);
+
+  const loadCategories = async () => {
+    try {
+      const data = await fetchCategories();
+      setCategories(data);
+      if (data.length > 0 && !formData.category && !editPost) {
+        setFormData(prev => ({ ...prev, category: data[0].name }));
+      }
+    } catch (error) {
+      console.error('Failed to load categories:', error);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -39,15 +67,21 @@ const WriteModal: React.FC<WriteModalProps> = ({ isOpen, onClose }) => {
     setLoading(true);
 
     try {
-      await createTilPost({
+      const postData = {
         ...formData,
         tags: parseTags(formData.tags)
-      });
+      };
+
+      if (editPost) {
+        await updateTilPost(editPost.id, postData);
+      } else {
+        await createTilPost(postData);
+      }
       
       onClose();
-      setFormData({ title: '', category: 'Backend', summary: '', tags: '', content: '' });
+      setFormData({ title: '', category: '', summary: '', tags: '', content: '' });
     } catch (error) {
-      console.error("Error adding document:", error);
+      console.error("Error saving document:", error);
       alert("Error saving post. Please try again.");
     } finally {
       setLoading(false);
@@ -67,8 +101,8 @@ const WriteModal: React.FC<WriteModalProps> = ({ isOpen, onClose }) => {
         </Button>
         <Card className="w-full shadow-2xl animate-in zoom-in duration-200 border-none flex flex-col max-h-[90vh]">
           <CardHeader className="border-b pb-4 shrink-0">
-            <CardTitle>Create TIL</CardTitle>
-            <CardDescription>Write using Markdown. Images via URL.</CardDescription>
+            <CardTitle>{editPost ? 'Edit TIL' : 'Create TIL'}</CardTitle>
+            <CardDescription>Write using Markdown with live preview.</CardDescription>
           </CardHeader>
         
         <form onSubmit={handleSubmit} className="flex flex-col overflow-hidden h-full">
@@ -90,10 +124,15 @@ const WriteModal: React.FC<WriteModalProps> = ({ isOpen, onClose }) => {
                   className="flex h-10 w-full items-center justify-between rounded-md border border-slate-200 bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none"
                   value={formData.category}
                   onChange={e => setFormData({...formData, category: e.target.value})}
+                  required
                 >
-                  {categories.til.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
+                  {categories.length === 0 ? (
+                    <option value="">No categories available</option>
+                  ) : (
+                    categories.map(cat => (
+                      <option key={cat.id} value={cat.name}>{cat.name}</option>
+                    ))
+                  )}
                 </select>
               </div>
 
@@ -122,16 +161,18 @@ const WriteModal: React.FC<WriteModalProps> = ({ isOpen, onClose }) => {
               />
             </div>
 
-            <div className="space-y-1.5 flex-1 flex flex-col">
+            <div className="space-y-1.5 flex-1 flex flex-col" data-color-mode="light">
               <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Content (Markdown)
               </label>
-              <Textarea
-                required
+              <MDEditor
                 value={formData.content}
-                onChange={e => setFormData({...formData, content: e.target.value})}
-                placeholder="Write your content in markdown..."
-                className="min-h-[250px] flex-1 font-mono text-sm resize-none"
+                onChange={(val) => setFormData({...formData, content: val || ''})}
+                preview="live"
+                height={400}
+                textareaProps={{
+                  placeholder: 'Write your content in markdown...'
+                }}
               />
             </div>
           </CardContent>
@@ -145,10 +186,10 @@ const WriteModal: React.FC<WriteModalProps> = ({ isOpen, onClose }) => {
                 {loading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Publishing...
+                    {editPost ? 'Updating...' : 'Publishing...'}
                   </>
                 ) : (
-                  'Publish'
+                  editPost ? 'Update' : 'Publish'
                 )}
               </Button>
             </div>

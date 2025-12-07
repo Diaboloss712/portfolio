@@ -5,10 +5,12 @@
   margin: 0 auto;
   background: white;
   font-family: 'Pretendard', -apple-system, sans-serif;
+  line-height: 1.6; /* 줄간격 개선 */
+  color: #1a1a1a;
 }
 
 .pdf-page {
-  min-height: 297mm; /* A4 높이 */
+  /* min-height 제거하여 빈 페이지 방지 */
   padding: 25mm 20mm; /* 화면 프리뷰용: 위아래 25mm, 좌우 20mm */
   page-break-after: always;
   break-after: page;
@@ -37,11 +39,21 @@
 }
 
 .project-section {
-  page-break-inside: avoid !important;
-  break-inside: avoid !important;
+  /* 프로젝트가 길 경우 페이지를 넘어갈 수 있도록 avoid 제거 */
   page-break-before: auto;
   break-before: auto;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* 프로젝트 내 각 하위 섹션은 페이지 안에서 유지 */
+.project-section > div {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* 프로젝트 간 간격 조정 */
+.project-section + .project-section {
+  margin-top: 1.5rem;
 }
 
 /* 프로젝트 제목이 페이지 하단에 남지 않도록 */
@@ -80,7 +92,7 @@
 
   .pdf-page {
     margin: 0;
-
+    /* min-height 제거로 빈 페이지 방지 */
     /* 인쇄에서는 위쪽 padding 제거: 여백은 @page가 담당 */
     padding: 0 18mm 14mm;
 
@@ -113,9 +125,14 @@
   }
 
   .project-section {
+    /* 프로젝트가 길 경우 페이지를 넘어갈 수 있도록 */
+    margin-bottom: 2rem;
+  }
+
+  /* 프로젝트 내 각 섹션은 페이지 안에서 유지 */
+  .project-section > div {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
-    margin-bottom: 1.5rem;
   }
 
   .project-section h2 {

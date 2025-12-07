@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Calendar } from 'lucide-react';
+import { X, Calendar, Edit } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@components/Card';
 import Badge from '@components/Badge';
 import Button from '@components/Button';
@@ -11,9 +11,10 @@ import { TilPost } from '@lib/supabase';
 interface ReadModalProps {
   post: TilPost | null;
   onClose: () => void;
+  onEdit?: (post: TilPost) => void;
 }
 
-const ReadModal: React.FC<ReadModalProps> = ({ post, onClose }) => {
+const ReadModal: React.FC<ReadModalProps> = ({ post, onClose, onEdit }) => {
   if (!post) return null;
 
   return (
@@ -64,7 +65,18 @@ const ReadModal: React.FC<ReadModalProps> = ({ post, onClose }) => {
               </Badge>
             ))}
           </div>
-          <Button variant="outline" onClick={onClose}>Close</Button>
+          <div className="flex gap-2">
+            {onEdit && (
+              <Button 
+                variant="outline" 
+                onClick={() => onEdit(post)}
+                className="flex items-center gap-2"
+              >
+                <Edit size={16} /> Edit
+              </Button>
+            )}
+            <Button variant="outline" onClick={onClose}>Close</Button>
+          </div>
         </CardFooter>
       </Card>
     </div>

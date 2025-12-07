@@ -101,3 +101,67 @@ export const deleteTilPost = async (id: string): Promise<void> => {
     throw error;
   }
 };
+
+export const updateTilPost = async (id: string, postData: Partial<TilPostInput>): Promise<TilPost> => {
+  const { data, error } = await supabase
+    .from('tils')
+    .update(postData)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error updating TIL post:', error);
+    throw error;
+  }
+
+  return data as TilPost;
+};
+
+// 카테고리 관리
+export interface Category {
+  id: string;
+  name: string;
+  created_at: string;
+}
+
+export const fetchCategories = async (): Promise<Category[]> => {
+  const { data, error } = await supabase
+    .from('til_categories')
+    .select('*')
+    .order('name', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching categories:', error);
+    throw error;
+  }
+
+  return (data as Category[]) || [];
+};
+
+export const createCategory = async (name: string): Promise<Category> => {
+  const { data, error } = await supabase
+    .from('til_categories')
+    .insert([{ name, created_at: new Date().toISOString() }])
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error creating category:', error);
+    throw error;
+  }
+
+  return data as Category;
+};
+
+export const deleteCategory = async (id: string): Promise<void> => {
+  const { error } = await supabase
+    .from('til_categories')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error('Error deleting category:', error);
+    throw error;
+  }
+};

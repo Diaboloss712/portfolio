@@ -66,26 +66,41 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold mb-4 border-b-2 border-emerald-600 pb-2">목표</h2>
+            <h2 className="text-2xl font-bold mb-4 border-b-2 border-emerald-600 pb-2">Backend Tech Stack</h2>
             <div className="space-y-4">
-              <div className="border-l-4 border-emerald-500 pl-4 py-2">
-                <h3 className="text-lg font-bold mb-2 text-emerald-700">Backend Engineer</h3>
-                <p className="text-gray-700 mb-2">{personalInfo.goals?.backend}</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600">
-                    <li>IoT/시뮬레이션 백엔드: MQTT·WebSocket·HTTP를 결합해 Unity 기반 스마트홈 시뮬레이터와 서버를 연동하는 백엔드 설계 및 구현(Moodify)</li>
-                    <li>도메인 중심 API 설계: Spring Boot·FastAPI 기반으로 향수 제조(노트/레시피·디바이스 제어)와 HRV 분석, Git 워크플로우 자동화 등의 도메인 모델·RESTful API 설계 및 구현(Moodrop, HRV 파이프라인, MCP Git 툴)</li>
-                    <li>시스템·워크플로우 자동화: Jenkins·Docker·MLflow·DVC·MCP 등을 활용해 모델 실험 관리, 데이터 파이프라인, Git 커밋/푸시 자동화 등 백엔드 작업 흐름을 자동화하는 시스템 구축</li>
-                </ul>
-              </div>
-              {/* <div className="border-l-4 border-purple-500 pl-4 py-2">
-                <h3 className="text-lg font-bold mb-2 text-purple-700">AI/MLOps Engineer</h3>
-                <p className="text-gray-700 mb-2">{personalInfo.goals?.ai}</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600">
-                  <li>모델 학습 파이프라인 자동화 (DVC, MLflow)</li>
-                  <li>모델 배포 및 모니터링 시스템 구축</li>
-                  <li>데이터 분석을 통한 비즈니스 인사이트 도출</li>
-                </ul>
-              </div> */}
+              {[
+                { name: 'Spring Boot / JPA', level: 3, desc: 'JPA 엔티티 모델링, MQTT 디바이스 제어 시 CompletableFuture 비동기 응답 처리' },
+                { name: 'FastAPI / Django', level: 3, desc: 'RAG API 서버 구축, MQTT·WebSocket 실시간 양방향 통신 구현' },
+                { name: 'PostgreSQL / MySQL', level: 3, desc: 'ER 다이어그램 설계, 외래키 제약조건, 인덱스 최적화, 트랜잭션 동시성 제어' },
+                { name: 'WebSocket / MQTT', level: 3, desc: 'QoS 레벨 차등화, 디바이스별 세션 관리 및 선택적 브로드캐스트' },
+                { name: 'Docker / Jenkins', level: 3, desc: 'CI/CD 파이프라인 구축, Dockerfile 다단계 빌드, Credential 보안 관리' }
+              ].map(skill => (
+                <div key={skill.name}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-gray-700">{skill.name}</span>
+                    <span className="text-xs font-bold text-emerald-600">Lv {skill.level}</span>
+                  </div>
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden mb-1">
+                    <div 
+                      className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"
+                      style={{ width: `${(skill.level / 5) * 100}%` }}
+                    />
+                  </div>
+                  <p className="text-xs text-gray-600 leading-relaxed">{skill.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-bold mb-4 border-b-2 border-emerald-600 pb-2">목표</h2>
+            <div className="space-y-3">
+              <p className="text-gray-700 text-sm leading-relaxed">{personalInfo.goals?.backend}</p>
+              <ul className="list-disc pl-5 space-y-1 text-xs text-gray-600">
+                <li>IoT/시뮬레이션 백엔드: MQTT·WebSocket·HTTP를 결합해 Unity 기반 스마트홈 시뮬레이터와 서버를 연동하는 백엔드 설계 및 구현(Moodify)</li>
+                <li>도메인 중심 API 설계: Spring Boot·FastAPI 기반으로 향수 제조(노트/레시피·디바이스 제어)와 HRV 분석, Git 워크플로우 자동화 등의 도메인 모델·RESTful API 설계 및 구현(Moodrop, HRV 파이프라인, MCP Git 툴)</li>
+                <li>시스템·워크플로우 자동화: Jenkins·Docker·MLflow·DVC·MCP 등을 활용해 모델 실험 관리, 데이터 파이프라인, Git 커밋/푸시 자동화 등 백엔드 작업 흐름을 자동화하는 시스템 구축</li>
+              </ul>
             </div>
           </div>
 
@@ -151,10 +166,10 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
               </div>
 
               <div className="mb-3">
-                <h3 className="text-lg font-bold mb-2">기술 스택</h3>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map(t => (
-                    <span key={t} className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm">
+                <h3 className="text-base font-bold mb-2">Tech Stack</h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {project.tech.slice(0, 6).map(t => (
+                    <span key={t} className="px-2 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">
                       {t}
                     </span>
                   ))}
@@ -163,9 +178,9 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
 
               {project.details && project.details.length > 0 && (
                 <div className="mb-3">
-                  <h3 className="text-lg font-bold mb-2">주요 내용</h3>
-                  <ul className="list-disc pl-5 space-y-1.5 text-sm text-gray-700">
-                    {project.details.map((detail, i) => (
+                  <h3 className="text-base font-bold mb-2">Key Highlights</h3>
+                  <ul className="list-disc pl-5 space-y-0.5 text-xs text-gray-700 leading-relaxed">
+                    {project.details.slice(0, 3).map((detail, i) => (
                       <li key={i}>{detail}</li>
                     ))}
                   </ul>
@@ -174,28 +189,11 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
 
               {project.issues && project.issues.length > 0 && (
                 <div className="mb-3">
-                  <h3 className="text-lg font-bold mb-2">문제 해결</h3>
-                  <div className="space-y-3">
-                    {project.issues.map((issue, i) => (
-                      <div key={i} className="text-sm">
-                        <p className="font-semibold text-gray-800 mb-1">{i + 1}. {issue.title}</p>
-                        {issue.cause && <p className="text-gray-700 pl-4 mb-1"><strong>원인:</strong> {issue.cause}</p>}
-                        <p className="text-gray-700 pl-4 mb-1"><strong>해결:</strong> {issue.solution}</p>
-                        {issue.result && <p className="text-gray-700 pl-4"><strong>결과:</strong> {issue.result}</p>}
-                      </div>
-                    ))}
+                  <h3 className="text-base font-bold mb-2">Problem Solving</h3>
+                  <div className="text-xs bg-gray-50 p-2.5 rounded">
+                    <p className="font-semibold text-gray-800 mb-1">{project.issues[0].title}</p>
+                    <p className="text-gray-700 leading-relaxed">{project.issues[0].solution}</p>
                   </div>
-                </div>
-              )}
-
-              {project.retrospect && project.retrospect.length > 0 && (
-                <div className="mb-3">
-                  <h3 className="text-lg font-bold mb-2">회고</h3>
-                  <ul className="list-disc pl-5 space-y-1.5 text-sm text-gray-700">
-                    {project.retrospect.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
                 </div>
               )}
 
@@ -223,8 +221,35 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
 
         <div className="space-y-8">
           <div>
+            <h2 className="text-2xl font-bold mb-4 border-b-2 border-indigo-600 pb-2">Full-stack Tech Stack</h2>
+            <div className="space-y-4">
+              {[
+                { name: 'React / TypeScript', level: 3, desc: 'React Hooks, 상태 관리, TypeScript 타입 안정성, Tailwind CSS 스타일링' },
+                { name: 'Spring Boot / FastAPI', level: 3, desc: 'RESTful API 설계, JPA/SQLAlchemy ORM, 비동기 처리' },
+                { name: 'MySQL / PostgreSQL', level: 3, desc: 'DB 스키마 설계, 트랜잭션 관리, 쿼리 최적화' },
+                { name: 'Unity / IoT', level: 2, desc: 'Unity 시뮬레이터 연동, MQTT 프로토콜 통신, 실시간 상태 동기화' },
+                { name: 'Docker / CI/CD', level: 3, desc: 'Docker 컨테이너화, Jenkins 파이프라인, AWS 배포' }
+              ].map(skill => (
+                <div key={skill.name}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-gray-700">{skill.name}</span>
+                    <span className="text-xs font-bold text-indigo-600">Lv {skill.level}</span>
+                  </div>
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden mb-1">
+                    <div 
+                      className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
+                      style={{ width: `${(skill.level / 5) * 100}%` }}
+                    />
+                  </div>
+                  <p className="text-xs text-gray-600 leading-relaxed">{skill.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
             <h2 className="text-2xl font-bold mb-4 border-b-2 border-indigo-600 pb-2">Why Full-stack?</h2>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-sm text-gray-700 leading-relaxed">
               서비스의 전체 흐름을 이해하면, 더 나은 설계 결정을 내릴 수 있습니다. 
               프론트엔드에서 어떤 데이터가 필요한지 알면 백엔드 API를 효율적으로 설계할 수 있고, 
               백엔드의 제약을 이해하면 프론트엔드에서 적절한 캐싱과 상태 관리를 할 수 있습니다.
@@ -285,10 +310,10 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
               </div>
 
               <div className="mb-3">
-                <h3 className="text-lg font-bold mb-2">기술 스택</h3>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map(t => (
-                    <span key={t} className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm">
+                <h3 className="text-base font-bold mb-2">Tech Stack</h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {project.tech.slice(0, 6).map(t => (
+                    <span key={t} className="px-2 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">
                       {t}
                     </span>
                   ))}
@@ -297,9 +322,9 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
 
               {project.details && project.details.length > 0 && (
                 <div className="mb-3">
-                  <h3 className="text-lg font-bold mb-2">주요 내용</h3>
-                  <ul className="list-disc pl-5 space-y-1.5 text-sm text-gray-700">
-                    {project.details.map((detail, i) => (
+                  <h3 className="text-base font-bold mb-2">Key Highlights</h3>
+                  <ul className="list-disc pl-5 space-y-0.5 text-xs text-gray-700 leading-relaxed">
+                    {project.details.slice(0, 3).map((detail, i) => (
                       <li key={i}>{detail}</li>
                     ))}
                   </ul>
@@ -308,28 +333,11 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
 
               {project.issues && project.issues.length > 0 && (
                 <div className="mb-3">
-                  <h3 className="text-lg font-bold mb-2">문제 해결</h3>
-                  <div className="space-y-3">
-                    {project.issues.map((issue, i) => (
-                      <div key={i} className="text-sm">
-                        <p className="font-semibold text-gray-800 mb-1">{i + 1}. {issue.title}</p>
-                        {issue.cause && <p className="text-gray-700 pl-4 mb-1"><strong>원인:</strong> {issue.cause}</p>}
-                        <p className="text-gray-700 pl-4 mb-1"><strong>해결:</strong> {issue.solution}</p>
-                        {issue.result && <p className="text-gray-700 pl-4"><strong>결과:</strong> {issue.result}</p>}
-                      </div>
-                    ))}
+                  <h3 className="text-base font-bold mb-2">Problem Solving</h3>
+                  <div className="text-xs bg-gray-50 p-2.5 rounded">
+                    <p className="font-semibold text-gray-800 mb-1">{project.issues[0].title}</p>
+                    <p className="text-gray-700 leading-relaxed">{project.issues[0].solution}</p>
                   </div>
-                </div>
-              )}
-
-              {project.retrospect && project.retrospect.length > 0 && (
-                <div className="mb-3">
-                  <h3 className="text-lg font-bold mb-2">회고</h3>
-                  <ul className="list-disc pl-5 space-y-1.5 text-sm text-gray-700">
-                    {project.retrospect.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
                 </div>
               )}
 
@@ -357,12 +365,50 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
 
         <div className="space-y-8">
           <div>
+            <h2 className="text-2xl font-bold mb-4 border-b-2 border-purple-600 pb-2">AI/ML Tech Stack</h2>
+            <div className="space-y-4">
+              {[
+                { name: 'Python / Pandas / NumPy', level: 3, desc: 'EDF 신호 리샘플링, HRV 피처 추출, DataFrame 벡터화 최적화' },
+                { name: 'Scikit-learn / ML', level: 3, desc: 'GroupKFold 데이터 분할, CatBoost/XGBoost 학습, GridSearch 튜닝' },
+                { name: 'LangChain', level: 3, desc: 'RecursiveTextSplitter 문서 청크, ConversationMemory Stateful 대화' },
+                { name: 'RAG', level: 3, desc: 'Bootstrap 문서 임베딩, Pinecone 유사도 검색, LLM 컨텍스트 증강' },
+                { name: 'MLflow', level: 3, desc: '하이퍼파라미터·메트릭 자동 로깅, 실험 비교, Model Registry 관리' },
+                { name: 'DVC', level: 3, desc: 'AWS S3 데이터 버전 관리, .dvc 메타데이터 Git 커밋, 실험 재현성' },
+                { name: 'PyArrow', level: 2, desc: 'Pandas 대비 84% I/O 단축, columnar storage 메모리 최적화' },
+                { name: 'FastAPI', level: 3, desc: 'LangChain·Pinecone RAG API, Pydantic 검증, 비동기 병렬 처리' }
+              ].map(skill => (
+                <div key={skill.name}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-gray-700">{skill.name}</span>
+                    <span className="text-xs font-bold text-purple-600">Lv {skill.level}</span>
+                  </div>
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden mb-1">
+                    <div 
+                      className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
+                      style={{ width: `${(skill.level / 5) * 100}%` }}
+                    />
+                  </div>
+                  <p className="text-xs text-gray-600 leading-relaxed">{skill.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
             <h2 className="text-2xl font-bold mb-4 border-b-2 border-purple-600 pb-2">Why AI?</h2>
-            <p className="text-gray-700 leading-relaxed">
-              AI는 모델 성능을 높이는 것만으로 끝나지 않습니다. 
-              실제 서비스로 만들려면 데이터 수집, 전처리, 특징 추출, 실험 관리, 배포, 모니터링까지 
-              전체 파이프라인을 구축해야 합니다. 저는 이 전 과정을 직접 설계하고 구현하는 것에 관심이 많습니다.
-            </p>
+            <div className="space-y-3 text-sm text-gray-700 leading-relaxed">
+              <p className="font-semibold text-gray-900">모델 성능만으로는 부족합니다</p>
+              <p>
+                AI는 모델 성능을 높이는 것만으로 끝나지 않습니다. 
+                실제 서비스로 만들려면 데이터 수집, 전처리, 특징 추출, 실험 관리, 배포, 모니터링까지 
+                전체 파이프라인을 구축해야 합니다.
+              </p>
+              <p className="font-semibold text-gray-900 mt-3">저의 강점: End-to-End 파이프라인 구축</p>
+              <ul className="list-disc pl-5 space-y-1 text-xs">
+                <li>NapSync: 생체 신호 전처리 → HRV 피처 추출 → 모델 학습 → MLflow 실험 관리 → DVC 데이터 버전 관리</li>
+                <li>Belcro: 문서 크롤링 → LangChain 파싱 → Pinecone 임베딩 → RAG API → Jenkins CI/CD</li>
+              </ul>
+            </div>
           </div>
 
           <div className="experience-section">
@@ -419,10 +465,10 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
               </div>
 
               <div className="mb-3">
-                <h3 className="text-lg font-bold mb-2">기술 스택</h3>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map(t => (
-                    <span key={t} className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm">
+                <h3 className="text-base font-bold mb-2">Tech Stack</h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {project.tech.slice(0, 6).map(t => (
+                    <span key={t} className="px-2 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">
                       {t}
                     </span>
                   ))}
@@ -431,9 +477,9 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
 
               {project.details && project.details.length > 0 && (
                 <div className="mb-3">
-                  <h3 className="text-lg font-bold mb-2">주요 내용</h3>
-                  <ul className="list-disc pl-5 space-y-1.5 text-sm text-gray-700">
-                    {project.details.map((detail, i) => (
+                  <h3 className="text-base font-bold mb-2">Key Highlights</h3>
+                  <ul className="list-disc pl-5 space-y-0.5 text-xs text-gray-700 leading-relaxed">
+                    {project.details.slice(0, 3).map((detail, i) => (
                       <li key={i}>{detail}</li>
                     ))}
                   </ul>
@@ -442,28 +488,11 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
 
               {project.issues && project.issues.length > 0 && (
                 <div className="mb-3">
-                  <h3 className="text-lg font-bold mb-2">문제 해결</h3>
-                  <div className="space-y-3">
-                    {project.issues.map((issue, i) => (
-                      <div key={i} className="text-sm">
-                        <p className="font-semibold text-gray-800 mb-1">{i + 1}. {issue.title}</p>
-                        {issue.cause && <p className="text-gray-700 pl-4 mb-1"><strong>원인:</strong> {issue.cause}</p>}
-                        <p className="text-gray-700 pl-4 mb-1"><strong>해결:</strong> {issue.solution}</p>
-                        {issue.result && <p className="text-gray-700 pl-4"><strong>결과:</strong> {issue.result}</p>}
-                      </div>
-                    ))}
+                  <h3 className="text-base font-bold mb-2">Problem Solving</h3>
+                  <div className="text-xs bg-gray-50 p-2.5 rounded">
+                    <p className="font-semibold text-gray-800 mb-1">{project.issues[0].title}</p>
+                    <p className="text-gray-700 leading-relaxed">{project.issues[0].solution}</p>
                   </div>
-                </div>
-              )}
-
-              {project.retrospect && project.retrospect.length > 0 && (
-                <div className="mb-3">
-                  <h3 className="text-lg font-bold mb-2">회고</h3>
-                  <ul className="list-disc pl-5 space-y-1.5 text-sm text-gray-700">
-                    {project.retrospect.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
                 </div>
               )}
 

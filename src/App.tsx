@@ -8,6 +8,8 @@ import FullstackPortfolio from '@pages/Portfolio/FullstackPortfolio';
 import AIPortfolio from '@pages/Portfolio/AIPortfolio';
 import PDFPortfolio from '@pages/PDFPortfolio';
 import TilPage from '@pages/TIL/TilPage';
+import WritePage from '@pages/TIL/WritePage';
+import ReadPage from '@pages/TIL/ReadPage';
 import ProjectsPage from '@pages/Projects/ProjectsPage';
 import ProjectDetailPage from '@pages/ProjectDetail/ProjectDetailPage';
 import { scrollToTop } from '@utils/helpers';
@@ -50,6 +52,9 @@ function App() {
         <Route path="/portfolio/fullstack" element={<FullstackPortfolio onNavigate={handleNavigate} />} />
         <Route path="/portfolio/ai" element={<AIPortfolio onNavigate={handleNavigate} />} />
         <Route path="/til" element={<TilPage />} />
+        <Route path="/til/write" element={<WritePage />} />
+        <Route path="/til/edit/:id" element={<WritePage />} />
+        <Route path="/til/:id" element={<ReadPage />} />
         <Route path="/projects" element={<ProjectsPage onNavigate={handleNavigate} />} />
         <Route path="/projects/:id" element={<ProjectDetailPageWrapper />} />
       </Routes>
