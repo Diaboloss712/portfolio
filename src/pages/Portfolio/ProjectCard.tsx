@@ -35,7 +35,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onNavigate }) => (
         </Badge>
         <span className="text-xs text-slate-400 font-mono">{project.date}</span>
       </div>
-      <CardTitle className="text-lg group-hover:text-blue-600 transition-colors mb-2 leading-tight">
+      <CardTitle className="text-lg group-hover:text-blue-600 transition-colors leading-normal mb-3">
         {project.title}
       </CardTitle>
       <CardDescription className="text-sm leading-relaxed line-clamp-2">

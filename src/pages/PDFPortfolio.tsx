@@ -162,7 +162,7 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
                     <strong>역할:</strong> {project.role}
                   </p>
                 )}
-                <p className="text-gray-700 mb-3">{project.desc}</p>
+                <p className="text-sm text-gray-700 mb-3 leading-loose">{project.desc}</p>
               </div>
 
               <div className="mb-3">
@@ -176,11 +176,11 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
                 </div>
               </div>
 
-              {project.details && project.details.length > 0 && (
+              {(project.pdfDetails || project.details) && (project.pdfDetails || project.details)!.length > 0 && (
                 <div className="mb-3">
                   <h3 className="text-base font-bold mb-2">Key Highlights</h3>
-                  <ul className="list-disc pl-5 space-y-0.5 text-xs text-gray-700 leading-relaxed">
-                    {project.details.slice(0, 3).map((detail, i) => (
+                  <ul className="list-disc pl-5 space-y-1.5 text-xs text-gray-700 leading-loose">
+                    {(project.pdfDetails || project.details?.slice(0, 3) || []).map((detail, i) => (
                       <li key={i}>{detail}</li>
                     ))}
                   </ul>
@@ -306,7 +306,7 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
                     <strong>역할:</strong> {project.role}
                   </p>
                 )}
-                <p className="text-gray-700 mb-3">{project.desc}</p>
+                <p className="text-sm text-gray-700 mb-3 leading-loose">{project.desc}</p>
               </div>
 
               <div className="mb-3">
@@ -320,11 +320,11 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
                 </div>
               </div>
 
-              {project.details && project.details.length > 0 && (
+              {(project.pdfDetails || project.details) && (project.pdfDetails || project.details)!.length > 0 && (
                 <div className="mb-3">
                   <h3 className="text-base font-bold mb-2">Key Highlights</h3>
-                  <ul className="list-disc pl-5 space-y-0.5 text-xs text-gray-700 leading-relaxed">
-                    {project.details.slice(0, 3).map((detail, i) => (
+                  <ul className="list-disc pl-5 space-y-1.5 text-xs text-gray-700 leading-loose">
+                    {(project.pdfDetails || project.details?.slice(0, 3) || []).map((detail, i) => (
                       <li key={i}>{detail}</li>
                     ))}
                   </ul>
@@ -461,7 +461,7 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
                     <strong>역할:</strong> {project.role}
                   </p>
                 )}
-                <p className="text-gray-700 mb-3">{project.desc}</p>
+                <p className="text-sm text-gray-700 mb-3 leading-loose">{project.desc}</p>
               </div>
 
               <div className="mb-3">
@@ -475,11 +475,11 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
                 </div>
               </div>
 
-              {project.details && project.details.length > 0 && (
+              {(project.pdfDetails || project.details) && (project.pdfDetails || project.details)!.length > 0 && (
                 <div className="mb-3">
                   <h3 className="text-base font-bold mb-2">Key Highlights</h3>
-                  <ul className="list-disc pl-5 space-y-0.5 text-xs text-gray-700 leading-relaxed">
-                    {project.details.slice(0, 3).map((detail, i) => (
+                  <ul className="list-disc pl-5 space-y-1.5 text-xs text-gray-700 leading-loose">
+                    {(project.pdfDetails || project.details?.slice(0, 3) || []).map((detail, i) => (
                       <li key={i}>{detail}</li>
                     ))}
                   </ul>
