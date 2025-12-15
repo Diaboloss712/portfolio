@@ -69,11 +69,11 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
             <h2 className="text-2xl font-bold mb-4 border-b-2 border-emerald-600 pb-2">Backend Tech Stack</h2>
             <div className="space-y-4">
               {[
-                { name: 'Spring Boot / JPA', level: 3, desc: 'JPA 엔티티 모델링, MQTT 디바이스 제어 시 CompletableFuture 비동기 응답 처리' },
-                { name: 'FastAPI / Django', level: 3, desc: 'RAG API 서버 구축, MQTT·WebSocket 실시간 양방향 통신 구현' },
-                { name: 'PostgreSQL / MySQL', level: 3, desc: 'ER 다이어그램 설계, 외래키 제약조건, 인덱스 최적화, 트랜잭션 동시성 제어' },
-                { name: 'WebSocket / MQTT', level: 3, desc: 'QoS 레벨 차등화, 디바이스별 세션 관리 및 선택적 브로드캐스트' },
-                { name: 'Docker / Jenkins', level: 3, desc: 'CI/CD 파이프라인 구축, Dockerfile 다단계 빌드, Credential 보안 관리' }
+                { name: 'Spring Boot / JPA', level: 4, desc: '복잡한 도메인 로직 격리 및 트랜잭션/동시성 제어 아키텍처 구현' },
+                { name: 'FastAPI / Django', level: 4, desc: 'Async-Sync Bridge 기반 고성능 비동기 API 설계' },
+                { name: 'PostgreSQL / MySQL', level: 3, desc: '데이터 무결성 보장을 위한 스키마 설계 및 쿼리 최적화' },
+                { name: 'WebSocket / MQTT', level: 3, desc: 'IoT 디바이스 제어를 위한 실시간 메시징 프로토콜 설계' },
+                { name: 'Docker / Jenkins', level: 3, desc: '자동화된 배포 파이프라인 구축 및 빌드/배포 환경 최적화' }
               ].map(skill => (
                 <div key={skill.name}>
                   <div className="flex items-center justify-between mb-1">
@@ -190,9 +190,25 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
               {project.issues && project.issues.length > 0 && (
                 <div className="mb-3">
                   <h3 className="text-base font-bold mb-2">Problem Solving</h3>
-                  <div className="text-xs bg-gray-50 p-2.5 rounded">
-                    <p className="font-semibold text-gray-800 mb-1">{project.issues[0].title}</p>
-                    <p className="text-gray-700 leading-relaxed">{project.issues[0].solution}</p>
+                  <div className="text-xs bg-gray-50 p-3 rounded space-y-2">
+                    <p className="font-bold text-gray-900 border-b border-gray-200 pb-1 mb-1">
+                      {project.issues[0].title}
+                    </p>
+                    
+                    <div>
+                      <span className="font-bold text-gray-700 block mb-0.5">Cause (Why)</span>
+                      <p className="text-gray-600 leading-relaxed mb-1.5">{project.issues[0].cause}</p>
+                    </div>
+
+                    <div>
+                      <span className="font-bold text-gray-700 block mb-0.5">Solution (How)</span>
+                      <p className="text-gray-600 leading-relaxed mb-1.5">{project.issues[0].solution}</p>
+                    </div>
+
+                    <div>
+                      <span className="font-bold text-gray-700 block mb-0.5">Result (Effect)</span>
+                      <p className="text-gray-600 leading-relaxed">{project.issues[0].result}</p>
+                    </div>
                   </div>
                 </div>
               )}
@@ -334,9 +350,25 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
               {project.issues && project.issues.length > 0 && (
                 <div className="mb-3">
                   <h3 className="text-base font-bold mb-2">Problem Solving</h3>
-                  <div className="text-xs bg-gray-50 p-2.5 rounded">
-                    <p className="font-semibold text-gray-800 mb-1">{project.issues[0].title}</p>
-                    <p className="text-gray-700 leading-relaxed">{project.issues[0].solution}</p>
+                  <div className="text-xs bg-gray-50 p-3 rounded space-y-2">
+                    <p className="font-bold text-gray-900 border-b border-gray-200 pb-1 mb-1">
+                      {project.issues[0].title}
+                    </p>
+                    
+                    <div>
+                      <span className="font-bold text-gray-700 block mb-0.5">Cause (Why)</span>
+                      <p className="text-gray-600 leading-relaxed mb-1.5">{project.issues[0].cause}</p>
+                    </div>
+
+                    <div>
+                      <span className="font-bold text-gray-700 block mb-0.5">Solution (How)</span>
+                      <p className="text-gray-600 leading-relaxed mb-1.5">{project.issues[0].solution}</p>
+                    </div>
+
+                    <div>
+                      <span className="font-bold text-gray-700 block mb-0.5">Result (Effect)</span>
+                      <p className="text-gray-600 leading-relaxed">{project.issues[0].result}</p>
+                    </div>
                   </div>
                 </div>
               )}
@@ -368,14 +400,14 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
             <h2 className="text-2xl font-bold mb-4 border-b-2 border-purple-600 pb-2">AI/ML Tech Stack</h2>
             <div className="space-y-4">
               {[
-                { name: 'Python / Pandas / NumPy', level: 3, desc: 'EDF 신호 리샘플링, HRV 피처 추출, DataFrame 벡터화 최적화' },
-                { name: 'Scikit-learn / ML', level: 3, desc: 'GroupKFold 데이터 분할, CatBoost/XGBoost 학습, GridSearch 튜닝' },
-                { name: 'LangChain', level: 3, desc: 'RecursiveTextSplitter 문서 청크, ConversationMemory Stateful 대화' },
-                { name: 'RAG', level: 3, desc: 'Bootstrap 문서 임베딩, Pinecone 유사도 검색, LLM 컨텍스트 증강' },
-                { name: 'MLflow', level: 3, desc: '하이퍼파라미터·메트릭 자동 로깅, 실험 비교, Model Registry 관리' },
-                { name: 'DVC', level: 3, desc: 'AWS S3 데이터 버전 관리, .dvc 메타데이터 Git 커밋, 실험 재현성' },
-                { name: 'PyArrow', level: 2, desc: 'Pandas 대비 84% I/O 단축, columnar storage 메모리 최적화' },
-                { name: 'FastAPI', level: 3, desc: 'LangChain·Pinecone RAG API, Pydantic 검증, 비동기 병렬 처리' }
+                { name: 'Python / Pandas / NumPy', level: 4, desc: '대용량 데이터 전처리 및 분석 파이프라인 최적화' },
+                { name: 'Scikit-learn / ML', level: 4, desc: '계층적 이진 분류 모델 학습 및 성능 평가 프로세스 구축' },
+                { name: 'LangChain', level: 4, desc: 'LLM 애플리케이션 개발 및 컨텍스트 관리 구현' },
+                { name: 'RAG', level: 4, desc: '벡터 DB 기반 검색 증강 생성 시스템 아키텍처 설계' },
+                { name: 'MLflow', level: 3, desc: '실험 추적 및 모델 생명주기(Lifecycle) 관리' },
+                { name: 'DVC', level: 3, desc: '대용량 데이터셋 버전 관리 및 실험 재현성 확보' },
+                { name: 'PyArrow', level: 3, desc: '고성능 데이터 I/O 처리 및 메모리 효율화' },
+                { name: 'FastAPI', level: 4, desc: 'AI 모델 서빙을 위한 고성능 비동기 API 서버 개발' }
               ].map(skill => (
                 <div key={skill.name}>
                   <div className="flex items-center justify-between mb-1">
@@ -489,9 +521,25 @@ const PDFPortfolio: React.FC<PDFPortfolioProps> = ({ portfolioType = 'all', onNa
               {project.issues && project.issues.length > 0 && (
                 <div className="mb-3">
                   <h3 className="text-base font-bold mb-2">Problem Solving</h3>
-                  <div className="text-xs bg-gray-50 p-2.5 rounded">
-                    <p className="font-semibold text-gray-800 mb-1">{project.issues[0].title}</p>
-                    <p className="text-gray-700 leading-relaxed">{project.issues[0].solution}</p>
+                  <div className="text-xs bg-gray-50 p-3 rounded space-y-2">
+                    <p className="font-bold text-gray-900 border-b border-gray-200 pb-1 mb-1">
+                      {project.issues[0].title}
+                    </p>
+                    
+                    <div>
+                      <span className="font-bold text-gray-700 block mb-0.5">Cause (Why)</span>
+                      <p className="text-gray-600 leading-relaxed mb-1.5">{project.issues[0].cause}</p>
+                    </div>
+
+                    <div>
+                      <span className="font-bold text-gray-700 block mb-0.5">Solution (How)</span>
+                      <p className="text-gray-600 leading-relaxed mb-1.5">{project.issues[0].solution}</p>
+                    </div>
+
+                    <div>
+                      <span className="font-bold text-gray-700 block mb-0.5">Result (Effect)</span>
+                      <p className="text-gray-600 leading-relaxed">{project.issues[0].result}</p>
+                    </div>
                   </div>
                 </div>
               )}
