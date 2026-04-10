@@ -315,23 +315,23 @@ export const projectsData: Project[] = [
     projectType: "team",
     teamSize: "6명",
     participation: "6인",
-    techEnv: "Python, CatBoost, MLflow, StratifiedGroupKFold, Mamba, DVC, NeuroKit2",
+    techEnv: "Python, Pandas, NumPy, Scikit-learn, CatBoost, PyTorch, MLflow, Mamba",
     assignedRole: "AI 모델링 및 MLOps 파이프라인 구축",
-    performance: "3단계 계층적 분류 모델로 정확도 24pp 향상(51%→75.3%), StratifiedGroupKFold 및 전처리 최적화로 일반화 성능 확보",
+    performance: "단일 4-class 분류의 한계를 재정의해 Sleep/Wake → REM/NREM → N3/N1N2의 3단계 계층형 분류와 temporal correction 구조로 전환했고, 정확도를 51.4%에서 75.3%로 개선했습니다. 같은 방법을 반복하는 것보다 오류가 집중되는 구간을 기준으로 문제 구조를 다시 정의하는 것이 더 큰 성과를 만든다는 점을 배웠습니다.",
     link: "https://portfolio-lyart-rho-29.vercel.app/projects/1",
-    overview: "ECG 데이터로 학습하고 스마트워치 PPG 신호로 수면 단계를 예측하는 AI 프로젝트입니다. 이기종 데이터 간의 주파수 차이를 100Hz Resampling으로 해결하고, 10분 윈도우 기반의 시계열 전처리를 적용했습니다. 초기 단일 모델의 한계를 극복하기 위해 'Wake/Sleep → REM/Non-REM → Light/Deep'의 3단계 계층적 이진 분류 모델을 구축했습니다. 또한 StratifiedGroupKFold와 개별 표준화, Moving RMS 기반 이상치 제어를 통해 과적합을 방지하고 신뢰성 있는 결과를 도출했습니다.",
+    overview: "기업 연계로 진행한 수면 단계 예측 AI 프로젝트입니다. per-epoch tabular feature를 기반으로 Wake/REM/N1N2/N3 4단계를 직접 분류하는 대신, Sleep/Wake, REM/NREM, N3/N1N2의 3단계 CatBoost 분류기로 문제를 재구성했습니다. 이후 Mamba 기반 temporal corrector로 시퀀스 확률을 보정했고, StratifiedGroupKFold와 group_zscore 전처리로 사용자 누수를 줄였습니다. 또한 MLflow로 전처리·모델 조합과 지표를 기록해 반복 실험과 결과 비교가 가능한 파이프라인을 운영했습니다.",
     techReason: [
-      "Python: 데이터 분석부터 인공지능 모델링까지 한 언어로 모두 처리할 수 있어 전체 과정을 연결하기 좋았습니다.",
-      "CatBoost: 표 형태의 데이터 분석에 강력하며, 생체 신호의 다양한 특징을 잘 학습했습니다.",
-      "MLflow: 수많은 하이퍼파라미터와 전처리 조합 실험 결과를 기록하고 비교하기 위해 도입했습니다.",
-      "StratifiedGroupKFold: 같은 피험자가 train/test에 겹치지 않도록 그룹 기반 분할을 적용하고 클래스 균형을 유지하여 일반화 성능을 확보했습니다.",
-      "Mamba: 긴 시퀀스 데이터 처리에 효율적이며, 수면 데이터의 시간적 흐름을 파악하는 데 적합했습니다.",
-      "NeuroKit2: ECG/PPG 신호의 HRV 특성 추출과 전처리에 활용했습니다."
+      "Python/Pandas/NumPy: 생체 신호 데이터의 tabular feature 추출과 전처리를 효율적으로 처리했습니다.",
+      "CatBoost: per-epoch tabular feature 기반 분류에 적합하며, 하이퍼파라미터 튜닝 없이도 높은 성능을 보였습니다.",
+      "PyTorch/Mamba: 시퀀스 확률 보정을 위한 temporal corrector 구현에 활용했습니다.",
+      "StratifiedGroupKFold: 피험자 기반 그룹 분할과 클래스 균형을 동시에 유지하여 일반화 성능을 확보했습니다.",
+      "MLflow: 전처리 조합과 모델별 성능 지표를 체계적으로 기록해 실험 재현성을 확보했습니다."
     ],
     details: [
-      "3단계 계층적 이진 분류 도입",
-      "StratifiedGroupKFold 및 개별 표준화로 사용자 편향 제거",
-      "Moving RMS 기반 이상치 제어 및 100Hz 데이터 규격화"
+      "3단계 계층형 분류: Sleep/Wake → REM/NREM → N3/N1N2 순환적 이진 분류 구조",
+      "Temporal correction: Mamba 기반 시퀀스 확률 보정으로 전이 구간 오분류 개선",
+      "일반화 성능 확보: StratifiedGroupKFold와 group_zscore로 피험자 누수 차단",
+      "실험 관리: MLflow 기반 전처리·모델 조합별 성능 추적"
     ],
     pdfDetails: [
       "3단계 분류 구조 설계로 수면 예측 정확도 24pp 향상 (51% → 75.3%)",
@@ -359,9 +359,9 @@ export const projectsData: Project[] = [
     ],
     images: {
       details: [
-        "/projects/CatB + Mamba Matrix.png",
-        "/projects/CNN + LSTM Matrix.png",
-        "/projects/XGB Matrix.png"
+        "/projects/catb-mamba-matrix.png",
+        "/projects/cnn-lstm-matrix.png",
+        "/projects/xgb-matrix.png"
       ]
     }
   },
@@ -444,7 +444,7 @@ export const projectsData: Project[] = [
     participation: "1인",
     techEnv: "Python, LangChain, LangGraph, Pinecone, FastAPI, PyArrow, OpenAI Embeddings",
     assignedRole: "RAG 파이프라인 및 LangGraph 멀티 에이전트 워크플로우 설계",
-    performance: "PyArrow + memory_map 적용으로 서버 기동 직후 메모리 점유량을 93.5% 절감",
+    performance: "PyArrow memory_map 기반 지연 로딩으로 서버 대기 메모리를 114.8MB에서 7.49MB로 줄여 93.5% 절감",
     overview: "Bootstrap·React·Tailwind 공식 문서를 통합 검색해 코드 생성을 지원하는 RAG 서비스를 개발하며, FastAPI 백엔드와 라이브 프리뷰 UI를 분리 구성했습니다. 또한 Google A2A (Agent-to-Agent) 프로토콜 표준을 준수하여 Agent Card 기반 Discovery와 Task/Artifact 메시지 구조를 구현하고, Pinecone 유사도를 confidence로 산출하여 검색 품질 메타데이터를 관리했습니다. 데이터 처리 계층은 PyArrow와 memory map 기반으로 최적화해 서버 기동 직후 메모리 점유량을 크게 줄였습니다.",
     techReason: [
       "Python: 크롤링, 검색, 코드 생성 파이프라인을 한 언어에서 일관되게 구현하기 위해 선택했습니다.",
@@ -493,7 +493,7 @@ export const projectsData: Project[] = [
     participation: "1인",
     techEnv: "Python, FastAPI, MCP Protocol, Ollama, Git CLI",
     assignedRole: "MCP 서버 구축 및 LLM 기반 자동화 로직 구현",
-    performance: "로컬 LLM + 비동기 처리 구조로 배치 커밋 파이프라인 처리 속도 5.5배 개선(11s→2s)",
+    performance: "LLM 호출을 비동기로 병렬화하고 Git 반영 구간을 분리해 10파일 시뮬레이션 기준 처리 시간을 11초에서 2초로 줄였습니다",
     overview: "서버 하나에서 로컬 저장소 변경사항을 수집하고, LLM으로 Conventional Commit 메시지를 생성해 커밋/푸시까지 자동화하는 시스템을 만들었습니다.\n\n통합 제어: FastAPI-MCP 서버에서 Git CLI 실행과 메시지 생성 로직을 한곳에서 관리하도록 구성했습니다.\n\n비동기 성능 최적화: 기존 순차 처리 방식을 비동기로 전환해 여러 파일 작업을 동시에 처리할 수 있게 했고, 배치 처리량을 개선했습니다.\n\n보안 및 안전성: 변경점 요약과 메시지 생성은 로컬 LLM(Ollama)로 처리하고, 생성 결과는 규칙 검증을 통과한 경우에만 커밋하도록 구성했습니다.",
     techReason: [
       "FastAPI-MCP: 초기에는 FastMCP를 쓰려 했으나 설정이 어려워, 더 익숙하고 제어가 쉬운 FastAPI-MCP 라이브러리를 선택했습니다.",
@@ -580,9 +580,9 @@ export const projectsData: Project[] = [
     id: 6,
     title: "MCP 시험 플랫폼 백엔드",
     category: "Backend/AI",
-    role: "유저 도메인 TDD 개발, Pinecone 벡터 DB 통합, 문제 도메인 Embedding 성능 테스트",
-    performance: "TDD 기반 비동기 테스트 인프라 구축, 3종 LLM 생성 품질 비교 실험으로 중복 회피 기준 수립",
-    desc: "시험 문제를 관리하고 AI 기반 중복 문제 검출·회피 기능을 제공하는 TDD 기반 백엔드 서버",
+    role: "유저 도메인 개발, Pinecone 벡터 DB 통합, 문제 유사도 비교 실험 및 회귀 검증 환경 구축",
+    performance: "pytest fixture와 비동기 세션 격리로 테스트 순서와 무관하게 통과하는 회귀 검증 환경을 구축했습니다. 문제 임베딩과 유사도 비교 실험을 통해 중복 회피 기준을 정리하며, 서비스 품질은 감이 아니라 테스트와 실험으로 관리해야 한다는 점을 배웠습니다.",
+    desc: "시험 문제 관리와 유사 문제 탐지를 위한 백엔드. FastAPI 기반으로 사용자·문제·인증 도메인을 분리해 확장성을 고려한 설계를 적용했습니다.",
     tech: ["FastAPI", "SQLAlchemy 2.0", "Pinecone", "Alembic", "PostgreSQL", "Docker"],
     status: "Completed",
     date: "2025.05 ~ 2025.08",
@@ -590,12 +590,12 @@ export const projectsData: Project[] = [
     image: "/projects/mcp-test.png",
     projectType: "team",
     teamSize: "2명",
-    myRole: `백엔드 구조 설계 및 테스트 주도 개발
+    myRole: `백엔드 구조 설계 및 회귀 검증 환경 구축
 - FastAPI + SQLAlchemy 2.0 비동기 서버 구조 설계
-- 테스트 코드를 먼저 작성하고 기능을 구현하는 TDD 방식 적용
-- Pinecone 벡터 DB 연동 및 임베딩 성능 테스트
-- 기능별로 코드를 분리하여 나중에 확장하기 좋게 설계`,
-    overview: `시험 문제를 관리하는 TDD 기반 백엔드 서버입니다. '테스트를 먼저 만들고 코드를 짜는' 방식으로 개발하여 프로그램의 신뢰도를 높였습니다. 사용자 관리, 문제 관리 등 기능을 블록처럼 나누어 나중에 기능을 추가하기 좋게 만들었습니다. 또한 문제 텍스트를 임베딩으로 변환해 Pinecone에 저장하고, 신규 문제 생성·등록 시 코사인 유사도 기반으로 중복 문제를 자동 검출·회피하는 파이프라인을 구축했습니다.`,
+- pytest fixture와 비동기 세션 격리로 테스트 간 간섭 방지
+- Pinecone 벡터 DB 연동 및 문제 임베딩 기반 유사도 비교 실험
+- 기능별 코드 분리로 확장성 있는 구조 설계`,
+    overview: `시험 문제 관리와 유사 문제 탐지를 위한 백엔드 프로젝트입니다. FastAPI와 SQLAlchemy 기반으로 사용자·문제·인증 도메인을 분리해 이후 기능 확장이 쉽도록 설계했고, 문제 텍스트를 임베딩해 Pinecone에 저장한 뒤 신규 문제 등록 시 코사인 유사도로 중복 가능성을 판단하도록 만들었습니다. 또한 pytest fixture와 비동기 세션 격리로 테스트 간 간섭을 막아 기능 추가 후에도 회귀 검증이 가능한 개발 환경을 구축했습니다.`,
     techReason: [
       "FastAPI: 파이썬이라 AI 라이브러리를 쓰기 편하고, 코드가 간결해서 선택했습니다.",
       "SQLAlchemy 2.0: 데이터베이스를 다루는 최신 기술로, 비동기 처리를 잘 지원해서 선택했습니다.",
